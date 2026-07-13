@@ -1,4 +1,10 @@
 <Solution>
+  <Folder Name="/docs/">
+    <File Path="Architecture.md" />
+  </Folder>
+  <Folder Name="/Solution Items/">
+    <File Path="README.md" />
+  </Folder>
   <Project Path="src/ReserveWorkbookGenerator.Console/ReserveWorkbookGenerator.Console.csproj" />
   <Project Path="src/ReserveWorkbookGenerator/ReserveWorkbookGenerator.csproj" />
   <Project Path="tests/ReserveWorkbookGenerator.Tests/ReserveWorkbookGenerator.Tests.csproj" />
