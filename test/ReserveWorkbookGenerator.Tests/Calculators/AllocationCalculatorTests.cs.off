@@ -1,0 +1,52 @@
+﻿using FluentAssertions;
+using ReserveWorkbookGenerator.Calculators;
+using ReserveWorkbookGenerator.Models;
+
+namespace ReserveWorkbookGenerator.Tests.Calculators;
+
+public class AllocationCalculatorTests
+{
+    [Fact]
+    public void Execute_Should_Allocate_Beginning_Pool_By_Ffb()
+    {
+        // Arrange
+        var components = new List<ReserveComponent>
+        {
+            new()
+            {
+                Id = 1,
+                Component = "Roof",
+                FFB = 200_000m
+            },
+            new()
+            {
+                Id = 2,
+                Component = "Paint",
+                FFB = 100_000m
+            },
+            new()
+            {
+                Id = 3,
+                Component = "Pool",
+                FFB = 200_000m
+            }
+        };
+
+        var calculator = new AllocationCalculator();
+
+        // Act
+        calculator.Execute(
+            components,
+            beginningReservePool: 1_000_000m);
+
+        // Assert
+
+        components[0].FfbWeight.Should().Be(0.40m);
+        components[1].FfbWeight.Should().Be(0.20m);
+        components[2].FfbWeight.Should().Be(0.40m);
+
+        components[0].BeginningAllocation.Should().Be(400_000m);
+        components[1].BeginningAllocation.Should().Be(200_000m);
+        components[2].BeginningAllocation.Should().Be(400_000m);
+    }
+}
