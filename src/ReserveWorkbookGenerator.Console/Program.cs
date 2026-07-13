@@ -7,10 +7,9 @@ var importer = new JsonComponentImporter();
 var components =
     importer.Load(@"Data\GrandCove.json");
 
-var engine =
-    new ReserveEngine(
-        new FfbCalculator());
-
+var engine = new ReserveEngine(
+    new ReserveScheduleBuilder(),
+    new FfbCalculator());
 var schedule =
     engine.Build(components);
 
