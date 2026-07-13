@@ -1,3 +1,29 @@
-{
-
-}
+[
+  {
+    "id": 1,
+    "category": "Roofing",
+    "component": "Roof Tiles",
+    "lastReplaced": 2006,
+    "usefulLife": 30,
+    "remainingLife": 18,
+    "replacementCost": 610000
+  },
+  {
+    "id": 2,
+    "category": "Painting",
+    "component": "Exterior Paint",
+    "lastReplaced": 2022,
+    "usefulLife": 8,
+    "remainingLife": 4,
+    "replacementCost": 165000
+  },
+  {
+    "id": 3,
+    "category": "Elevators",
+    "component": "Elevator Modernization",
+    "lastReplaced": 2006,
+    "usefulLife": 25,
+    "remainingLife": 12,
+    "replacementCost": 285000
+  }
+]

@@ -1,5 +1,5 @@
 <Solution>
   <Project Path="src/ReserveWorkbookGenerator.Console/ReserveWorkbookGenerator.Console.csproj" />
   <Project Path="src/ReserveWorkbookGenerator/ReserveWorkbookGenerator.csproj" />
-  <Project Path="test/ReserveWorkbookGenerator.Tests/ReserveWorkbookGenerator.Tests.csproj" />
+  <Project Path="tests/ReserveWorkbookGenerator.Tests/ReserveWorkbookGenerator.Tests.csproj" />
 </Solution>
