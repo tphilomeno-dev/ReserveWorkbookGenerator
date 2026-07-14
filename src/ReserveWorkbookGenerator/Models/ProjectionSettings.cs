@@ -2,8 +2,6 @@
 
 public class ProjectionSettings
 {
-    public int StartYear { get; set; }
-
     public int NumberOfYears { get; set; }
 
     public decimal InflationRate { get; set; }

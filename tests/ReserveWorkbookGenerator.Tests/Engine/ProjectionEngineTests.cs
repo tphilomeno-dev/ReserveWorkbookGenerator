@@ -51,6 +51,13 @@ public class ProjectionEngineTests
     {
         var engine = new ProjectionEngine();
 
+        var settings = new ProjectionSettings
+        {
+            NumberOfYears = 3,
+            InterestRate = 0.03m,
+            InflationRate = 0.00m
+        };
+
         var firstYear = new ReserveProjectionYear
         {
             Year = 2026,
@@ -60,7 +67,9 @@ public class ProjectionEngineTests
             ReserveExpenditures = 75_000m
         };
 
-        var years = engine.ProjectYears(firstYear, 3);
+        var years = engine.ProjectYears(
+            settings,
+            firstYear);
 
         years.Should().HaveCount(3);
 
