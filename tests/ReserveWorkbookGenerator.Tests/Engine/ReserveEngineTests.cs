@@ -36,9 +36,10 @@ public class ReserveEngineTests
         };
 
         var engine = new ReserveEngine(
-                new ReserveScheduleBuilder(),
-                new FfbCalculator(),
-                new AllocationCalculator());
+            new ReserveScheduleBuilder(),
+            new FfbCalculator(),
+            new AllocationCalculator(),
+            new AnnualContributionCalculator());
 
         var settings = new ReserveSettings
         {

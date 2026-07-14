@@ -19,6 +19,10 @@ public class ExcelWorkbookExporter : IWorkbookExporter
         worksheet.Cell(1, 5).Value = "FFB";
         worksheet.Cell(1, 6).Value = "FFB Weight";
         worksheet.Cell(1, 7).Value = "Beginning Allocation";
+        worksheet.Cell(1, 8).Value = "Remaining Required";
+        worksheet.Cell(1, 9).Value = "Annual Contribution";
+        worksheet.Cell(1, 10).Value = "Monthly Contribution";
+        worksheet.Cell(1, 11).Value = "Monthly CPU";
 
         int row = 2;
 
@@ -31,6 +35,11 @@ public class ExcelWorkbookExporter : IWorkbookExporter
             worksheet.Cell(row, 5).Value = item.FFB;
             worksheet.Cell(row, 6).Value = item.FfbWeight;
             worksheet.Cell(row, 7).Value = item.BeginningAllocation;
+            worksheet.Cell(row, 8).Value = item.RemainingRequired;
+            worksheet.Cell(row, 9).Value = item.AnnualContribution;
+            worksheet.Cell(row, 10).Value = item.MonthlyContribution;
+            worksheet.Cell(row, 11).Value = item.MonthlyCpu;
+
             row++;
         }
 

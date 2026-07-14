@@ -11,13 +11,15 @@ var components =
 
 var settings = new ReserveSettings
 {
-    BeginningReservePool = 1_250_000m
+    BeginningReservePool = 1_250_000m,
+    UnitCount = 24
 };
 
 var engine = new ReserveEngine(
     new ReserveScheduleBuilder(),
     new FfbCalculator(),
-    new AllocationCalculator());
+    new AllocationCalculator(),
+    new AnnualContributionCalculator());
 
 var schedule = engine.Build(
     components,
