@@ -1,6 +1,7 @@
 <Solution>
   <Folder Name="/docs/">
     <File Path="Architecture.md" />
+    <File Path="Git Commands.txt" />
   </Folder>
   <Folder Name="/Solution Items/">
     <File Path="README.md" />

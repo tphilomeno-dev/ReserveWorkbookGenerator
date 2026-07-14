@@ -36,11 +36,19 @@ public class ReserveEngineTests
         };
 
         var engine = new ReserveEngine(
-    new ReserveScheduleBuilder(),
-    new FfbCalculator());
+                new ReserveScheduleBuilder(),
+                new FfbCalculator(),
+                new AllocationCalculator());
+
+        var settings = new ReserveSettings
+        {
+            BeginningReservePool = 1_000_000m
+        };
 
         // Act
-        var schedule = engine.Build(components);
+        var schedule = engine.Build(
+            components,
+            settings);
 
         // Assert
 

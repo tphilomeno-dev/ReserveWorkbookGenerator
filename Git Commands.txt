@@ -1,0 +1,23 @@
+# Commit feature
+git add .
+git commit -m "Complete Feature 2 - Basic Excel export"
+
+# Push feature
+git push
+
+# Merge into main
+git switch main
+git pull
+git merge feature/excel-export
+git push
+
+# Tag release
+git tag -a v0.2.0 -m "Feature 2 - Basic Excel export"
+git push origin v0.2.0
+
+# Delete feature branch
+git branch -d feature/excel-export
+git push origin --delete feature/excel-export
+
+# Start next feature
+git switch -c feature/allocation-engine
