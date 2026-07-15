@@ -8,6 +8,10 @@ public sealed class ReserveProjection
     public ProjectionSettings Settings { get; set; } = new();
 
     /// <summary>
+    /// Reserve funding assumptions used to build reserve schedules.
+    /// </summary>
+    public ReserveSettings ReserveSettings { get; set; } = new();
+    /// <summary>
     /// Original reserve study components.
     /// These are never modified during a projection.
     /// </summary>
@@ -19,10 +23,6 @@ public sealed class ReserveProjection
     /// </summary>
     public List<ReserveComponent> WorkingComponents { get; set; } = new();
 
-    /// <summary>
-    /// Current reserve schedule calculated from the working components.
-    /// </summary>
-    public List<ReserveScheduleRow> CurrentSchedule { get; set; } = new();
     /// <summary>
     /// Financial summary for each projected year.
     /// </summary>

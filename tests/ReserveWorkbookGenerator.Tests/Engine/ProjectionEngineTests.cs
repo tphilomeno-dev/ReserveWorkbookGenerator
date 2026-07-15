@@ -146,8 +146,11 @@ public class ProjectionEngineTests
         projected[0].Should().NotBeSameAs(original);
     }
     
+    
+    
+    
     [Fact]
-    public void Should_Create_Working_Component_Copy()
+    public void Should_Create_First_Projection_Year()
     {
         // Arrange
 
@@ -155,90 +158,13 @@ public class ProjectionEngineTests
         {
             Settings = new ProjectionSettings
             {
-                NumberOfYears = 5,
-                InterestRate = 0.03m
+                NumberOfYears = 1
+            },
+            ReserveSettings = new ReserveSettings
+            {
+                BeginningReservePool = 1_250_000m,
+                UnitCount = 24
             }
-        };
-
-        projection.SourceComponents.Add(
-            new ReserveComponent
-            {
-                Id = 1,
-                Component = "Roof",
-                RemainingLife = 18
-            });
-
-        var engine = new ProjectionEngine();
-
-        // Act
-
-        engine.Project(projection);
-
-        // Assert
-
-        projection.WorkingComponents.Should().HaveCount(1);
-
-        projection.WorkingComponents[0]
-            .Should()
-            .NotBeSameAs(projection.SourceComponents[0]);
-
-        projection.WorkingComponents[0].Component
-            .Should()
-            .Be("Roof");
-
-        projection.SourceComponents[0].RemainingLife
-    .Should()
-    .Be(18);
-
-        projection.WorkingComponents[0].RemainingLife
-            .Should()
-            .Be(17);
-    }
-    [Fact]
-    public void Should_Age_Working_Components()
-    {
-        // Arrange
-
-        var projection = new ReserveProjection
-        {
-            Settings = new ProjectionSettings()
-        };
-
-        projection.SourceComponents.Add(
-            new ReserveComponent
-            {
-                Component = "Roof",
-                RemainingLife = 18
-            });
-
-        var engine = new ProjectionEngine();
-
-        // Act
-
-        engine.Project(projection);
-
-        // Assert
-
-        projection.SourceComponents[0]
-            .RemainingLife.Should().Be(18);
-
-        projection.WorkingComponents.Should().HaveCount(1);
-
-        projection.WorkingComponents[0]
-            .RemainingLife.Should().Be(17);
-
-        projection.WorkingComponents[0]
-            .Should()
-            .NotBeSameAs(projection.SourceComponents[0]);
-    }
-    [Fact]
-    public void Should_Build_Current_Schedule()
-    {
-        // Arrange
-
-        var projection = new ReserveProjection
-        {
-            Settings = new ProjectionSettings()
         };
 
         projection.SourceComponents.Add(
@@ -253,11 +179,63 @@ public class ProjectionEngineTests
                 ReplacementCost = 610000m
             });
 
-        var reserveSettings = new ReserveSettings
+        var reserveEngine = new ReserveEngine(
+            new ReserveScheduleBuilder(),
+            new FfbCalculator(),
+            new AllocationCalculator(),
+            new AnnualContributionCalculator());
+
+        var engine = new ProjectionEngine();
+
+        // Act
+
+        engine.Project(
+            projection,
+            reserveEngine);
+
+        // Assert
+
+        projection.Years.Should().HaveCount(1);
+
+        var year = projection.Years[0];
+
+        year.Schedule.Should().HaveCount(1);
+
+        year.Schedule[0].Component.Component
+            .Should().Be("Roof");
+
+        year.Schedule[0].Component.RemainingLife
+            .Should().Be(18);
+    }
+    [Fact]
+    public void Should_Create_Multiple_Projection_Years()
+    {
+        // Arrange
+
+        var projection = new ReserveProjection
         {
-            BeginningReservePool = 1_250_000m,
-            UnitCount = 24
+            Settings = new ProjectionSettings
+            {
+                NumberOfYears = 5
+            },
+            ReserveSettings = new ReserveSettings
+            {
+                BeginningReservePool = 1_250_000m,
+                UnitCount = 24
+            }
         };
+
+        projection.SourceComponents.Add(
+            new ReserveComponent
+            {
+                Id = 1,
+                Category = "Roofing",
+                Component = "Roof",
+                LastReplaced = 2006,
+                UsefulLife = 38,
+                RemainingLife = 18,
+                ReplacementCost = 610000m
+            });
 
         var reserveEngine = new ReserveEngine(
             new ReserveScheduleBuilder(),
@@ -271,17 +249,16 @@ public class ProjectionEngineTests
 
         engine.Project(
             projection,
-            reserveEngine,
-            reserveSettings);
+            reserveEngine);
 
         // Assert
 
-        projection.CurrentSchedule.Should().HaveCount(1);
+        projection.Years.Should().HaveCount(5);
 
-        projection.CurrentSchedule[0].Component.Component
-            .Should().Be("Roof");
-
-        projection.CurrentSchedule[0].Component.RemainingLife
-            .Should().Be(17);
+        projection.Years[0].Schedule[0].Component.RemainingLife.Should().Be(18);
+        projection.Years[1].Schedule[0].Component.RemainingLife.Should().Be(17);
+        projection.Years[2].Schedule[0].Component.RemainingLife.Should().Be(16);
+        projection.Years[3].Schedule[0].Component.RemainingLife.Should().Be(15);
+        projection.Years[4].Schedule[0].Component.RemainingLife.Should().Be(14);
     }
 }
