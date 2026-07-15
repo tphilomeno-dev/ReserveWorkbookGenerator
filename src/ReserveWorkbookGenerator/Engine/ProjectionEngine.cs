@@ -1,4 +1,6 @@
-﻿using ReserveWorkbookGenerator.Common;
+﻿using ReserveWorkbookGenerator.Calculators;
+using ReserveWorkbookGenerator.Common;
+using ReserveWorkbookGenerator.Extensions;
 using ReserveWorkbookGenerator.Models;
 
 namespace ReserveWorkbookGenerator.Engine;
@@ -93,5 +95,96 @@ public class ProjectionEngine
         }
 
         return years;
+    }
+    /// <summary>
+    /// Initializes a reserve projection.
+    /// </summary>
+    private void InitializeProjection(
+        ReserveProjection projection)
+    {
+        if (projection == null)
+            throw new ArgumentNullException(nameof(projection));
+
+        // Create an independent working copy of the reserve study.
+        projection.WorkingComponents = projection.SourceComponents
+            .Select(c => c.Clone())
+            .ToList();
+    }
+    /// <summary>
+    /// Projects the reserve study one year and builds the current reserve schedule.
+    /// </summary>
+    public void Project(
+        ReserveProjection projection,
+        ReserveEngine scheduleEngine)
+    {
+        if (projection == null)
+            throw new ArgumentNullException(nameof(projection));
+
+        if (scheduleEngine == null)
+            throw new ArgumentNullException(nameof(scheduleEngine));
+        if (projection.Settings.NumberOfYears <= 0)
+        {
+            throw new ArgumentOutOfRangeException(
+                nameof(projection.Settings.NumberOfYears),
+                "NumberOfYears must be greater than zero.");
+        }
+        //
+        // Build the working copy.
+        //
+
+        InitializeProjection(projection);
+
+        //
+        // Create yearly snapshots.
+        //
+
+        projection.Years.Clear();
+
+        var currentYear = DateTime.Now.Year;
+
+        for (int i = 0; i < projection.Settings.NumberOfYears; i++)
+        {
+            var schedule = scheduleEngine.Build(
+                projection.WorkingComponents,
+                projection.ReserveSettings);
+
+            projection.Years.Add(
+                CreateProjectionYear(
+                    currentYear + i,
+                    projection,
+                    schedule));
+
+            if (i < projection.Settings.NumberOfYears - 1)
+            {
+                AdvanceWorkingComponents(projection);
+            }
+        }
+    }
+    private void AdvanceWorkingComponents(
+    ReserveProjection projection)
+    {
+        var agingCalculator = new ComponentAgingCalculator();
+
+        agingCalculator.Execute(projection.WorkingComponents);
+    }
+    /// <summary>
+    /// Creates a yearly projection snapshot.
+    /// </summary>
+    private ReserveProjectionYear CreateProjectionYear(
+        int year,
+        ReserveProjection projection,
+        List<ReserveScheduleRow> reserveSchedule)
+    {
+        return new ReserveProjectionYear
+        {
+            Year = year,
+
+            BeginningPool =
+                projection.ReserveSettings.BeginningReservePool,
+
+            Schedule = reserveSchedule
+                .Select(r => r.Clone())
+                .ToList()
+        };
     }
 }

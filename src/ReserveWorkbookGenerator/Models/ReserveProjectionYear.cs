@@ -12,5 +12,10 @@ public class ReserveProjectionYear
 
     public decimal ReserveExpenditures { get; set; }
 
+    /// <summary>
+    /// Reserve schedule for this projected year.
+    /// This is a snapshot of the reserve study for the year.
+    /// </summary>
+    public List<ReserveScheduleRow> Schedule { get; set; } = new();
     public decimal EndingPool { get; set; }
 }

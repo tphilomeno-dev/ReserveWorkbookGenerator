@@ -1,5 +1,7 @@
 ﻿using FluentAssertions;
+using ReserveWorkbookGenerator.Calculators;
 using ReserveWorkbookGenerator.Engine;
+using ReserveWorkbookGenerator.Extensions;
 using ReserveWorkbookGenerator.Models;
 using Xunit;
 
@@ -79,5 +81,184 @@ public class ProjectionEngineTests
 
         years[0].EndingPool.Should().Be(1_345_000m);
         years[1].BeginningPool.Should().Be(1_345_000m);
+    }
+    [Fact]
+    public void Should_Create_Next_Year_From_Current_Year()
+    {
+        var current = new ReserveProjectionYear
+        {
+            Year = 2026,
+            BeginningPool = 1_250_000m,
+            AnnualContributions = 150_000m,
+            InterestEarned = 20_000m,
+            ReserveExpenditures = 75_000m
+        };
+
+        var engine = new ProjectionEngine();
+
+        engine.ProjectOneYear(current);
+
+        var next = engine.CreateNextYear(current);
+
+        next.Year.Should().Be(2027);
+        next.BeginningPool.Should().Be(current.EndingPool);
+    }
+    
+    [Fact]
+    public void Should_Preserve_Original_Components_When_Projecting()
+    {
+        // Arrange
+
+        var original = new ReserveComponent
+        {
+            Id = 1,
+            Category = "Roofing",
+            Component = "Roof Tiles",
+            LastReplaced = 2006,
+            UsefulLife = 38,
+            RemainingLife = 18,
+            ReplacementCost = 610000m
+        };
+
+        var originals = new List<ReserveComponent>
+    {
+        original
+    };
+
+        // Act
+
+        var projected = originals
+            .Select(c => c.Clone())
+            .ToList();
+
+        var agingCalculator = new ComponentAgingCalculator();
+
+        agingCalculator.Execute(projected);
+
+        // Assert
+
+        original.RemainingLife.Should().Be(18);
+
+        projected.Should().HaveCount(1);
+
+        projected[0].RemainingLife.Should().Be(17);
+
+        projected[0].Should().NotBeSameAs(original);
+    }
+    
+    
+    
+    
+    [Fact]
+    public void Should_Create_First_Projection_Year()
+    {
+        // Arrange
+
+        var projection = new ReserveProjection
+        {
+            Settings = new ProjectionSettings
+            {
+                NumberOfYears = 1
+            },
+            ReserveSettings = new ReserveSettings
+            {
+                BeginningReservePool = 1_250_000m,
+                UnitCount = 24
+            }
+        };
+
+        projection.SourceComponents.Add(
+            new ReserveComponent
+            {
+                Id = 1,
+                Category = "Roofing",
+                Component = "Roof",
+                LastReplaced = 2006,
+                UsefulLife = 38,
+                RemainingLife = 18,
+                ReplacementCost = 610000m
+            });
+
+        var reserveEngine = new ReserveEngine(
+            new ReserveScheduleBuilder(),
+            new FfbCalculator(),
+            new AllocationCalculator(),
+            new AnnualContributionCalculator());
+
+        var engine = new ProjectionEngine();
+
+        // Act
+
+        engine.Project(
+            projection,
+            reserveEngine);
+
+        // Assert
+
+        projection.Years.Should().HaveCount(1);
+
+        var year = projection.Years[0];
+
+        year.Schedule.Should().HaveCount(1);
+
+        year.Schedule[0].Component.Component
+            .Should().Be("Roof");
+
+        year.Schedule[0].Component.RemainingLife
+            .Should().Be(18);
+    }
+    [Fact]
+    public void Should_Create_Multiple_Projection_Years()
+    {
+        // Arrange
+
+        var projection = new ReserveProjection
+        {
+            Settings = new ProjectionSettings
+            {
+                NumberOfYears = 5
+            },
+            ReserveSettings = new ReserveSettings
+            {
+                BeginningReservePool = 1_250_000m,
+                UnitCount = 24
+            }
+        };
+
+        projection.SourceComponents.Add(
+            new ReserveComponent
+            {
+                Id = 1,
+                Category = "Roofing",
+                Component = "Roof",
+                LastReplaced = 2006,
+                UsefulLife = 38,
+                RemainingLife = 18,
+                ReplacementCost = 610000m
+            });
+
+        var reserveEngine = new ReserveEngine(
+            new ReserveScheduleBuilder(),
+            new FfbCalculator(),
+            new AllocationCalculator(),
+            new AnnualContributionCalculator());
+
+        var engine = new ProjectionEngine();
+
+        // Act
+
+        engine.Project(
+            projection,
+            reserveEngine);
+
+        // Assert
+
+        projection.Years.Should().HaveCount(5);
+
+        projection.Years[0].Schedule[0].Component.RemainingLife.Should().Be(18);
+        projection.Years[1].Schedule[0].Component.RemainingLife.Should().Be(17);
+        projection.Years[2].Schedule[0].Component.RemainingLife.Should().Be(16);
+        projection.Years[3].Schedule[0].Component.RemainingLife.Should().Be(15);
+        projection.Years[4].Schedule[0].Component.RemainingLife.Should().Be(14);
     }
 }

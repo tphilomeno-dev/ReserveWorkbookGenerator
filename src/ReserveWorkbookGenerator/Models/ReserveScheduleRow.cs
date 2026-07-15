@@ -1,4 +1,6 @@
-﻿namespace ReserveWorkbookGenerator.Models;
+﻿using ReserveWorkbookGenerator.Extensions;
+
+namespace ReserveWorkbookGenerator.Models;
 
 public sealed class ReserveScheduleRow
 {
@@ -27,4 +29,27 @@ public sealed class ReserveScheduleRow
     public decimal MonthlyContribution { get; set; }
 
     public decimal MonthlyCpu { get; set; }
+    /// <summary>
+    /// Creates a deep copy of the reserve schedule row.
+    /// </summary>
+    public ReserveScheduleRow Clone()
+    {
+        return new ReserveScheduleRow
+        {
+            Component = Component.Clone(),
+
+            FFB = FFB,
+            FfbWeight = FfbWeight,
+            BeginningAllocation = BeginningAllocation,
+            RemainingRequired = RemainingRequired,
+            ReplacementCostWeight = ReplacementCostWeight,
+            AnnualContribution = AnnualContribution,
+            InterestAllocation = InterestAllocation,
+            ReserveExpenditure = ReserveExpenditure,
+            EndingAllocation = EndingAllocation,
+            FundRatio = FundRatio,
+            MonthlyContribution = MonthlyContribution,
+            MonthlyCpu = MonthlyCpu
+        };
+    }
 }
