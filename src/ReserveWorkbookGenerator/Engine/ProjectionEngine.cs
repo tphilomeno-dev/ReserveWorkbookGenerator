@@ -1,4 +1,6 @@
-﻿using ReserveWorkbookGenerator.Common;
+﻿using ReserveWorkbookGenerator.Calculators;
+using ReserveWorkbookGenerator.Common;
+using ReserveWorkbookGenerator.Extensions;
 using ReserveWorkbookGenerator.Models;
 
 namespace ReserveWorkbookGenerator.Engine;
@@ -93,5 +95,55 @@ public class ProjectionEngine
         }
 
         return years;
+    }
+    /// <summary>
+    /// Initializes a reserve projection.
+    /// </summary>
+    public void Project(ReserveProjection projection)
+    {
+        if (projection == null)
+            throw new ArgumentNullException(nameof(projection));
+
+        // Create an independent working copy of the reserve study.
+        projection.WorkingComponents = projection.SourceComponents
+            .Select(c => c.Clone())
+            .ToList();
+
+        // Advance the working copy one year.
+        var agingCalculator = new ComponentAgingCalculator();
+
+        agingCalculator.Execute(projection.WorkingComponents);
+    }
+    /// <summary>
+    /// Projects the reserve study one year and builds the current reserve schedule.
+    /// </summary>
+    public void Project(
+        ReserveProjection projection,
+        ReserveEngine reserveEngine,
+        ReserveSettings reserveSettings)
+    {
+        if (projection == null)
+            throw new ArgumentNullException(nameof(projection));
+
+        if (reserveEngine == null)
+            throw new ArgumentNullException(nameof(reserveEngine));
+
+        if (reserveSettings == null)
+            throw new ArgumentNullException(nameof(reserveSettings));
+
+        //
+        // Build the working copy.
+        //
+
+        Project(projection);
+
+        //
+        // Build the reserve schedule for the aged components.
+        //
+
+        projection.CurrentSchedule =
+            reserveEngine.Build(
+                projection.WorkingComponents,
+                reserveSettings);
     }
 }
