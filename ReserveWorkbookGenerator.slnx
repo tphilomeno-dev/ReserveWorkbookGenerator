@@ -1,6 +1,7 @@
 <Solution>
   <Folder Name="/docs/">
     <File Path="Architecture.md" />
+    <File Path="Feature8.md" />
     <File Path="FundingMethodology.md" />
     <File Path="FundingResearch.md" />
     <File Path="Git Commands.txt" />
@@ -9,6 +10,7 @@
     <File Path="FFB-Research.xlsx" />
   </Folder>
   <Folder Name="/Solution Items/">
+    <File Path="CHANGELOG.md" />
     <File Path="README.md" />
   </Folder>
   <Project Path="src/ReserveWorkbookGenerator.Console/ReserveWorkbookGenerator.Console.csproj" />

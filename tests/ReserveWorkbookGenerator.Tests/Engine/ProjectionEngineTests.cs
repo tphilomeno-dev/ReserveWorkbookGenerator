@@ -261,4 +261,57 @@ public class ProjectionEngineTests
         projection.Years[3].Schedule[0].Component.RemainingLife.Should().Be(15);
         projection.Years[4].Schedule[0].Component.RemainingLife.Should().Be(14);
     }
+    [Fact]
+    public void Should_Calculate_Annual_Contributions_From_Schedule()
+    {
+        // Arrange
+
+        var projection = new ReserveProjection
+        {
+            Settings = new ProjectionSettings
+            {
+                NumberOfYears = 1
+            },
+            ReserveSettings = new ReserveSettings
+            {
+                BeginningReservePool = 1_250_000m,
+                UnitCount = 24
+            }
+        };
+
+        projection.SourceComponents.Add(
+            new ReserveComponent
+            {
+                Id = 1,
+                Category = "Roofing",
+                Component = "Roof",
+                LastReplaced = 2006,
+                UsefulLife = 38,
+                RemainingLife = 18,
+                ReplacementCost = 610000m
+            });
+
+        var reserveEngine = new ReserveEngine(
+            new ReserveScheduleBuilder(),
+            new FfbCalculator(),
+            new AllocationCalculator(),
+            new AnnualContributionCalculator());
+
+        var engine = new ProjectionEngine();
+
+        // Act
+
+        engine.Project(
+            projection,
+            reserveEngine);
+
+        // Assert
+
+        var expectedContribution =
+            projection.Years[0].Schedule.Sum(r => r.AnnualContribution);
+
+        projection.Years[0].AnnualContributions
+            .Should()
+            .Be(expectedContribution);
+    }
 }
