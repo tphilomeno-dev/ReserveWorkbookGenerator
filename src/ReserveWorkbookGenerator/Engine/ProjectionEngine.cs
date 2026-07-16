@@ -13,6 +13,7 @@ public class ProjectionEngine
     private readonly ComponentRenewalCalculator _componentRenewalCalculator = new();
     private readonly InflationCalculator _inflationCalculator = new();
     private readonly ComponentAgingCalculator _agingCalculator = new();
+    private readonly PortfolioInterestCalculator _portfolioInterestCalculator = new();
 
     /// <summary>
     /// Calculates the financial results for a single budget year.
@@ -170,10 +171,21 @@ public class ProjectionEngine
                     projection.Years[i - 1].EndingPool;
             }
 
-            var interestEarned =
-                _interestCalculator.Calculate(
-                    beginningPool,
-                    projection.Settings.InterestRate);
+            decimal interestEarned;
+
+            if (projection.InvestmentPortfolio is not null)
+            {
+                interestEarned =
+                    _portfolioInterestCalculator.Calculate(
+                        projection.InvestmentPortfolio);
+            }
+            else
+            {
+                interestEarned =
+                    _interestCalculator.Calculate(
+                        beginningPool,
+                        projection.Settings.InterestRate);
+            }
 
             var reserveExpenditures =
                 _reserveExpenditureCalculator.Calculate(

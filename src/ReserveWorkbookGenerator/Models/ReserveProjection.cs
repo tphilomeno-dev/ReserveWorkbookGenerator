@@ -27,4 +27,6 @@ public sealed class ReserveProjection
     /// Financial summary for each projected year.
     /// </summary>
     public List<ReserveProjectionYear> Years { get; set; } = new();
+
+    public InvestmentPortfolio? InvestmentPortfolio { get; set; }
 }

@@ -541,4 +541,63 @@ public class ProjectionEngineTests
         projection.Years[1].ReserveExpenditures
             .Should().Be(0m);
     }
+    [Fact]
+    public void Should_Use_Portfolio_Interest_When_Portfolio_Is_Present()
+    {
+        // Arrange
+
+        var projection = new ReserveProjection
+        {
+            Settings = new ProjectionSettings
+            {
+                NumberOfYears = 1
+            },
+            ReserveSettings = new ReserveSettings
+            {
+                BeginningReservePool = 500000m,
+                UnitCount = 24
+            },
+            InvestmentPortfolio = new InvestmentPortfolio()
+        };
+
+        projection.InvestmentPortfolio.Accounts.Add(
+            new InvestmentAccount
+            {
+                Institution = "Bank A",
+                Balance = 500000m,
+                InterestRate = 0.04m
+            });
+
+        projection.SourceComponents.Add(
+            new ReserveComponent
+            {
+                Id = 1,
+                Category = "Roofing",
+                Component = "Roof",
+                RemainingLife = 10,
+                UsefulLife = 30,
+                ReplacementCost = 600000m
+            });
+
+        var reserveEngine = new ReserveEngine(
+            new ReserveScheduleBuilder(),
+            new FfbCalculator(),
+            new AllocationCalculator(),
+            new AnnualContributionCalculator());
+
+        var engine = new ProjectionEngine();
+
+        // Act
+
+        engine.Project(
+            projection,
+            reserveEngine);
+
+        // Assert
+
+        projection.Years.Should().HaveCount(1);
+
+        projection.Years[0].InterestEarned
+            .Should().Be(20000m);
+    }
 }

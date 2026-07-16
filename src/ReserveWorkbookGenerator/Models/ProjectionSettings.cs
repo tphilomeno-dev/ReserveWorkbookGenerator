@@ -7,4 +7,7 @@ public class ProjectionSettings
     public decimal InflationRate { get; set; }
 
     public decimal InterestRate { get; set; }
+
+    public ReinvestmentPolicy ReinvestmentPolicy { get; set; }
+    = ReinvestmentPolicy.AutoRenewSameRate;
 }
