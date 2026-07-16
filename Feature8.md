@@ -37,3 +37,5 @@ Beginning
 + Contributions
 + Interest
 - Expenditures
+
+A reserve expenditure occurs during the first projection year in which a component's RemainingLife equals 0.

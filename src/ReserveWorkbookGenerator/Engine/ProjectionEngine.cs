@@ -1,6 +1,7 @@
 ﻿using ReserveWorkbookGenerator.Calculators;
 using ReserveWorkbookGenerator.Common;
 using ReserveWorkbookGenerator.Extensions;
+using ReserveWorkbookGenerator.Financial;
 using ReserveWorkbookGenerator.Models;
 
 namespace ReserveWorkbookGenerator.Engine;
@@ -10,6 +11,8 @@ public class ProjectionEngine
     /// <summary>
     /// Calculates the financial results for a single budget year.
     /// </summary>
+    private readonly FixedRateInterestCalculator _interestCalculator = new();
+    private readonly ReserveExpenditureCalculator _reserveExpenditureCalculator = new();
     public void ProjectOneYear(ReserveProjectionYear year)
     {
         if (year == null)
@@ -147,12 +150,46 @@ public class ProjectionEngine
             var schedule = scheduleEngine.Build(
                 projection.WorkingComponents,
                 projection.ReserveSettings);
+            var annualContributions =
+                schedule.Sum(r => r.AnnualContribution);
+            decimal beginningPool;
+
+            if (i == 0)
+            {
+                beginningPool =
+                    projection.ReserveSettings.BeginningReservePool;
+            }
+            else
+            {
+                beginningPool =
+                    projection.Years[i - 1].EndingPool;
+            }
+
+            var interestEarned =
+                _interestCalculator.Calculate(
+                    beginningPool,
+                    projection.Settings.InterestRate);
+
+            var reserveExpenditures =
+                _reserveExpenditureCalculator.Calculate(
+                    projection.WorkingComponents);
+            var endingPool =
+                Money.Round(
+                    beginningPool
+                    + annualContributions
+                    + interestEarned
+                    - reserveExpenditures);
 
             projection.Years.Add(
                 CreateProjectionYear(
                     currentYear + i,
-                    projection,
-                    schedule));
+                    schedule,
+                    beginningPool,
+                    annualContributions,
+                    interestEarned,
+                    reserveExpenditures,
+                    endingPool));
+
 
             if (i < projection.Settings.NumberOfYears - 1)
             {
@@ -172,19 +209,27 @@ public class ProjectionEngine
     /// </summary>
     private ReserveProjectionYear CreateProjectionYear(
         int year,
-        ReserveProjection projection,
-        List<ReserveScheduleRow> reserveSchedule)
+        List<ReserveScheduleRow> reserveSchedule,
+        decimal beginningPool,
+        decimal annualContributions,
+        decimal interestEarned,
+        decimal reserveExpenditures,
+        decimal endingPool)
     {
+        
         return new ReserveProjectionYear
         {
             Year = year,
 
-            BeginningPool =
-                projection.ReserveSettings.BeginningReservePool,
+            BeginningPool = beginningPool,
+            AnnualContributions = annualContributions,
+            InterestEarned = interestEarned,
+            EndingPool = endingPool,
+            ReserveExpenditures = reserveExpenditures,
 
             Schedule = reserveSchedule
-                .Select(r => r.Clone())
-                .ToList()
+        .Select(r => r.Clone())
+        .ToList()
         };
     }
 }

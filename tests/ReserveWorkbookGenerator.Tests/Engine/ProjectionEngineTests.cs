@@ -314,4 +314,125 @@ public class ProjectionEngineTests
             .Should()
             .Be(expectedContribution);
     }
+    [Fact]
+    public void Should_Calculate_Interest_For_Projection_Year()
+    {
+        // Arrange
+
+        var projection = new ReserveProjection
+        {
+            Settings = new ProjectionSettings
+            {
+                NumberOfYears = 1,
+                InterestRate = 0.03m
+            },
+            ReserveSettings = new ReserveSettings
+            {
+                BeginningReservePool = 1_250_000m,
+                UnitCount = 24
+            }
+        };
+
+        projection.SourceComponents.Add(
+            new ReserveComponent
+            {
+                Id = 1,
+                Category = "Roofing",
+                Component = "Roof",
+                LastReplaced = 2006,
+                UsefulLife = 38,
+                RemainingLife = 18,
+                ReplacementCost = 610000m
+            });
+
+        var reserveEngine = new ReserveEngine(
+            new ReserveScheduleBuilder(),
+            new FfbCalculator(),
+            new AllocationCalculator(),
+            new AnnualContributionCalculator());
+
+        var engine = new ProjectionEngine();
+
+        // Act
+
+        engine.Project(
+            projection,
+            reserveEngine);
+
+        // Assert
+
+        projection.Years.Should().HaveCount(1);
+
+        projection.Years[0].InterestEarned
+            .Should()
+            .Be(37_500m);
+    }
+    [Fact]
+    public void Should_Carry_Ending_Pool_To_Next_Year()
+    {
+        // Arrange
+
+        var projection = new ReserveProjection
+        {
+            Settings = new ProjectionSettings
+            {
+                NumberOfYears = 2,
+                InterestRate = 0.03m
+            },
+            ReserveSettings = new ReserveSettings
+            {
+                BeginningReservePool = 1_250_000m,
+                UnitCount = 24
+            }
+        };
+
+        projection.SourceComponents.Add(
+            new ReserveComponent
+            {
+                Id = 1,
+                Category = "Roofing",
+                Component = "Roof",
+                LastReplaced = 2006,
+                UsefulLife = 38,
+                RemainingLife = 18,
+                ReplacementCost = 610000m
+            });
+
+        var reserveEngine = new ReserveEngine(
+            new ReserveScheduleBuilder(),
+            new FfbCalculator(),
+            new AllocationCalculator(),
+            new AnnualContributionCalculator());
+
+        var engine = new ProjectionEngine();
+
+        // Act
+
+        engine.Project(
+            projection,
+            reserveEngine);
+
+        // Assert
+
+        projection.Years.Should().HaveCount(2);
+
+        projection.Years[1].BeginningPool
+            .Should()
+            .Be(projection.Years[0].EndingPool);
+    }
+    [Fact]
+    public void Should_Not_Replace_Component_With_One_Year_Remaining()
+    {
+        // Arrange
+
+        var component = new ReserveComponent
+        {
+            Component = "Roof",
+            RemainingLife = 1,
+            ReplacementCost = 100000m
+        };
+
+        // This test will evolve as we implement
+        // ReserveExpenditureCalculator.
+    }
 }
