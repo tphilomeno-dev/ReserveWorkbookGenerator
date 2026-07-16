@@ -8,11 +8,15 @@ namespace ReserveWorkbookGenerator.Engine;
 
 public class ProjectionEngine
 {
+    private readonly FixedRateInterestCalculator _interestCalculator = new();
+    private readonly ReserveExpenditureCalculator _reserveExpenditureCalculator = new();
+    private readonly ComponentRenewalCalculator _componentRenewalCalculator = new();
+    private readonly InflationCalculator _inflationCalculator = new();
+    private readonly ComponentAgingCalculator _agingCalculator = new();
+
     /// <summary>
     /// Calculates the financial results for a single budget year.
     /// </summary>
-    private readonly FixedRateInterestCalculator _interestCalculator = new();
-    private readonly ReserveExpenditureCalculator _reserveExpenditureCalculator = new();
     public void ProjectOneYear(ReserveProjectionYear year)
     {
         if (year == null)
@@ -150,6 +154,7 @@ public class ProjectionEngine
             var schedule = scheduleEngine.Build(
                 projection.WorkingComponents,
                 projection.ReserveSettings);
+
             var annualContributions =
                 schedule.Sum(r => r.AnnualContribution);
             decimal beginningPool;
@@ -173,6 +178,7 @@ public class ProjectionEngine
             var reserveExpenditures =
                 _reserveExpenditureCalculator.Calculate(
                     projection.WorkingComponents);
+
             var endingPool =
                 Money.Round(
                     beginningPool
@@ -190,6 +196,13 @@ public class ProjectionEngine
                     reserveExpenditures,
                     endingPool));
 
+            _componentRenewalCalculator.Execute(
+                projection.WorkingComponents,
+                currentYear + i);
+
+            _inflationCalculator.Execute(
+                projection.WorkingComponents,
+                projection.Settings.InflationRate);
 
             if (i < projection.Settings.NumberOfYears - 1)
             {
@@ -200,9 +213,9 @@ public class ProjectionEngine
     private void AdvanceWorkingComponents(
     ReserveProjection projection)
     {
-        var agingCalculator = new ComponentAgingCalculator();
+        //var agingCalculator = new ComponentAgingCalculator();
 
-        agingCalculator.Execute(projection.WorkingComponents);
+        _agingCalculator.Execute(projection.WorkingComponents);
     }
     /// <summary>
     /// Creates a yearly projection snapshot.

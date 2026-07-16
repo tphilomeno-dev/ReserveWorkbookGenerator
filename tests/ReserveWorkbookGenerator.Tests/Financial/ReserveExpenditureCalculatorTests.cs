@@ -72,4 +72,5 @@ public class ReserveExpenditureCalculatorTests
             .Should()
             .Be(750000m);
     }
+    
 }

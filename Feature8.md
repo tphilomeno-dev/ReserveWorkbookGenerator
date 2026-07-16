@@ -39,3 +39,12 @@ Beginning
 - Expenditures
 
 A reserve expenditure occurs during the first projection year in which a component's RemainingLife equals 0.
+
+Financial Processing Order
+
+1. Beginning Reserve Pool
+2. Annual Contributions
+3. Interest Earned
+4. Reserve Expenditures
+5. Ending Reserve Pool
+6. Carry Ending Pool to Next Year
