@@ -18,4 +18,12 @@ public class ReserveProjectionYear
     /// </summary>
     public List<ReserveScheduleRow> Schedule { get; set; } = new();
     public decimal EndingPool { get; set; }
+
+    public decimal FullyFundedBalance { get; set; }
+
+    public decimal PercentFunded { get; set; }
+
+    public FundingLevel FundingLevel { get; set; }
+
+    public FundingTrend FundingTrend { get; set; }
 }
