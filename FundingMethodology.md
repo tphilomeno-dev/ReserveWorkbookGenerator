@@ -90,6 +90,10 @@ Transparency is a primary design objective.
 
 ---
 
+Principle 6 — Contributions Are Need-Based
+
+Annual reserve contributions are only assigned to components whose analytical allocation is below their current funding target. Components that have reached their funding target receive no additional contribution until future conditions (such as inflation, reserve expenditures, or updated reserve studies) create a new funding need.
+
 # Funding Model
 
 The Reserve Workbook implements a Hybrid FFB Funding Model.
@@ -163,6 +167,34 @@ The workbook performs the following calculations:
 7. Apply Reserve Expenditures
 8. Calculate Ending Allocation
 9. Calculate Fund Ratio
+
+# Funding Mathematics
+FFB =
+Replacement Cost ×
+(Age ÷ Useful Life)
+
+FFB Weight =
+Component FFB
+÷
+Total FFB
+
+Beginning Allocation =
+Reserve Pool × FFB Weight
+
+Roof Tiles
+
+Replacement Cost      $500,000
+Useful Life                 25 years
+Remaining Life              10 years
+FFB                    $300,000
+
+Total FFB             $1,200,000
+
+FFB Weight                 25%
+
+Reserve Pool         $2,000,000
+
+Beginning Allocation  $500,000
 
 The resulting schedule becomes the Association's reserve funding plan for the coming fiscal year.
 
@@ -250,7 +282,7 @@ It combines pooled reserve funding with analytical component allocations to impr
 
 ---
 
-# Future Enhancements
+# Future Research
 
 Planned enhancements include:
 
@@ -269,7 +301,10 @@ Planned enhancements include:
 
 # Guiding Philosophy
 
-The objective of this project is **not** to reproduce reserve study software.
+The objective of this project is not to reproduce reserve study software. 
+The objective is to provide a transparent, explainable, and practical reserve 
+funding methodology that supports sound financial decision-making while remaining 
+understandable to board members and unit owners.
 
 The objective is to produce a reserve funding workbook that:
 

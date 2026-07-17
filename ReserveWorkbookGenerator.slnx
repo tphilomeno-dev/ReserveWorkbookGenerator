@@ -1,6 +1,7 @@
 <Solution>
   <Folder Name="/docs/">
     <File Path="Architecture.md" />
+    <File Path="DecisionLog.md" />
     <File Path="Feature8.md" />
     <File Path="FundingMethodology.md" />
     <File Path="FundingResearch.md" />

@@ -34,8 +34,7 @@ public class ReserveEngine
             rows,
             settings.BeginningReservePool);
 
-        _annualContributionCalculator.Execute(
-            rows,
+        _annualContributionCalculator.Execute(rows,
             settings);
 
         return rows;

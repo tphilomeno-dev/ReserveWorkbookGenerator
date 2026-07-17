@@ -3,17 +3,14 @@ using ReserveWorkbookGenerator.Engine;
 using ReserveWorkbookGenerator.Exporters;
 using ReserveWorkbookGenerator.Importers;
 using ReserveWorkbookGenerator.Models;
+using System.Diagnostics;
 
-var importer = new JsonComponentImporter();
+var importer = new JsonReserveStudyImporter();
 
-var components =
-    importer.Load(@"Data\GrandCove.json");
+var study =
+    importer.Load(@"Data\GrandCove-Current.json");
 
-var settings = new ReserveSettings
-{
-    BeginningReservePool = 1_250_000m,
-    UnitCount = 24
-};
+
 
 var engine = new ReserveEngine(
     new ReserveScheduleBuilder(),
@@ -22,8 +19,23 @@ var engine = new ReserveEngine(
     new AnnualContributionCalculator());
 
 var schedule = engine.Build(
-    components,
-    settings);
+    study.Components,
+    study.Settings);
+
+Console.WriteLine();
+Console.WriteLine("Reserve Schedule");
+
+foreach (var row in schedule)
+{
+    Console.WriteLine(
+        $"{row.Component.Component,-30}" +
+        $" FFB={row.FFB,12:C0}" +
+        $" Begin={row.BeginningAllocation,12:C0}" +
+        $" Remaining={row.RemainingRequired,12:C0}" +
+        $" Annual={row.AnnualContribution,12:C0}" +
+        $" Monthly={row.MonthlyContribution,10:C0}" +
+        $" CPU={row.MonthlyCpu,8:C2}");
+}
 
 var exporter = new ExcelWorkbookExporter();
 
@@ -34,6 +46,12 @@ var outputFile = Path.Combine(
 exporter.Export(outputFile, schedule);
 
 Console.WriteLine($"Workbook written to: {outputFile}");
+
+Process.Start(new ProcessStartInfo
+{
+    FileName = outputFile,
+    UseShellExecute = true
+});
 
 foreach (var row in schedule)
 {

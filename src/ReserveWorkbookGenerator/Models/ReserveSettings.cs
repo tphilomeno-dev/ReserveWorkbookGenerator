@@ -12,9 +12,7 @@ namespace ReserveWorkbookGenerator.Models
 
         public decimal BeginningReservePool { get; set; }
 
-        public decimal AnnualReserveBudget { get; set; }
-
-        public decimal AnnualInterest { get; set; }
+        public decimal InterestRate { get; set; }
 
         public decimal InflationRate { get; set; }
 

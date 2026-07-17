@@ -8,11 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Data\GrandCove.json" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="Data\GrandCove.json">
+    <Content Include="Data\GrandCove-Current.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

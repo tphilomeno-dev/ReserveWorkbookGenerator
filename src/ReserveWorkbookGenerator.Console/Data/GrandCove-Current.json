@@ -1,0 +1,53 @@
+{
+  "study": {
+    "associationName": "Grand Cove Condominium Association",
+    "propertyDescription": "24 Unit, 2 Building Condominium Association",
+    "studyDate": "2026-07-17",
+    "preparedBy": "Reserve Workbook Generator",
+    "version": "1.0",
+    "notes": "Initial reserve study imported into the Reserve Workbook Generator."
+  },
+
+  "settings": {
+    "currentYear": 2026,
+    "unitCount": 24,
+    "beginningReservePool": 1250000.00,
+    "annualReserveBudget": 150000.00,
+    "annualInterest": 0.03,
+    "inflationRate": 0.03,
+    "allocationMethod": "FullyFundedBalance"
+  },
+
+  "components": [
+    {
+      "id": 1,
+      "category": "Roofing",
+      "component": "Roof Tiles",
+      "lastReplaced": 2006,
+      "usefulLife": 30,
+      "remainingLife": 18,
+      "replacementCost": 610000.00,
+      "comments": "Clay tile roof replacement."
+    },
+    {
+      "id": 2,
+      "category": "Painting",
+      "component": "Exterior Paint",
+      "lastReplaced": 2022,
+      "usefulLife": 8,
+      "remainingLife": 4,
+      "replacementCost": 165000.00,
+      "comments": "Complete exterior repaint."
+    },
+    {
+      "id": 3,
+      "category": "Elevators",
+      "component": "Elevator Modernization",
+      "lastReplaced": 2006,
+      "usefulLife": 25,
+      "remainingLife": 12,
+      "replacementCost": 285000.00,
+      "comments": "Modernize both elevators."
+    }
+  ]
+}

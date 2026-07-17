@@ -24,21 +24,18 @@ public class AllocationCalculator
 		{
 			row.FfbWeight = Money.Divide(row.FFB, totalFfb);
 
-			row.BeginningAllocation =
-				Money.Round(beginningReservePool * row.FfbWeight);
-		}
+            row.BeginningAllocation = Money.Round(
+					beginningReservePool * row.FfbWeight);
 
-		//
-		// Fix any rounding difference by adjusting the last row.
-		//
+            Console.WriteLine(
+                $"{row.Component.Component,-25} " +
+                $"Cost={row.Component.ReplacementCost:C0} " +
+                $"Allocated={row.BeginningAllocation:C0}");
+        }
 
-		decimal allocated = rows.Sum(r => r.BeginningAllocation);
-
-		decimal difference = beginningReservePool - allocated;
-
-		if (difference != 0)
-		{
-			rows[^1].BeginningAllocation += difference;
-		}
-	}
+        // Components are capped at their funding target.
+        // Any remaining reserve balance is treated as
+        // an unallocated reserve surplus and is reported
+        // separately.
+    }
 }
