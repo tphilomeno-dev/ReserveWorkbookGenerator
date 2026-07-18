@@ -8,6 +8,13 @@ namespace ReserveWorkbookGenerator.Excel.Sheets
 {
     public class ReserveScheduleSheet
     {
+        private const string WorksheetName = "02 Reserve Schedule";
+
+        private const int HeaderRow = 1;
+        private const int FirstDataRow = 2;
+        /// <summary>
+        /// Builds the Reserve Schedule worksheet.
+        /// </summary>
         /// <summary>
         /// Builds the Reserve Schedule worksheet.
         /// </summary>
@@ -15,95 +22,161 @@ namespace ReserveWorkbookGenerator.Excel.Sheets
             XLWorkbook workbook,
             IEnumerable<ReserveScheduleRow> schedule)
         {
-            var worksheet = workbook.Worksheets.Add("02 Reserve Schedule");
+            ArgumentNullException.ThrowIfNull(workbook);
+            ArgumentNullException.ThrowIfNull(schedule);
 
-            worksheet.Cell("A1").Value = "Category";
-            worksheet.Cell("B1").Value = "Reserve Component";
-            worksheet.Cell("C1").Value = "Last Replaced";
-            worksheet.Cell("D1").Value = "Useful Life";
-            worksheet.Cell("E1").Value = "Remaining Life";
-            worksheet.Cell("F1").Value = "Replacement Year";
-            worksheet.Cell("G1").Value = "Replacement Cost";
-            worksheet.Cell("H1").Value = "Beginning Allocation";
-            worksheet.Cell("I1").Value = "Fully Funded Balance";
-            worksheet.Cell("J1").Value = "Remaining Required";
-            worksheet.Cell("K1").Value = "Annual Contribution";
-            worksheet.Cell("L1").Value = "Monthly Contribution";
-            worksheet.Cell("M1").Value = "Monthly CPU";
-            worksheet.Cell("N1").Value = "FFB Weight";
+            var worksheet = workbook.Worksheets.Add(WorksheetName);
 
-            var row = 2;
+            WriteHeaders(worksheet);
+
+            var lastRow = WriteDetailRows(
+                worksheet,
+                schedule);
+
+            WriteTotals(
+                worksheet,
+                lastRow);
+
+            FormatWorksheet(
+                worksheet,
+                lastRow);
+        }
+        /// <summary>
+        /// Writes the Reserve Schedule column headers.
+        /// </summary>
+        private static void WriteHeaders(
+            IXLWorksheet worksheet)
+        {
+            ArgumentNullException.ThrowIfNull(worksheet);
+
+            string[] headers =
+            {
+        "Category",
+        "Reserve Component",
+        "Last Replaced",
+        "Useful Life",
+        "Remaining Life",
+        "Replacement Year",
+        "Replacement Cost",
+        "Beginning Allocation",
+        "Fully Funded Balance",
+        "Remaining Required",
+        "Annual Contribution",
+        "Monthly Contribution",
+        "Monthly CPU",
+        "FFB Weight"
+    };
+
+            for (int column = 0; column < headers.Length; column++)
+            {
+                worksheet.Cell(HeaderRow, column + 1).Value = headers[column];
+            }
+        }
+
+        /// <summary>
+        /// Writes the Reserve Schedule detail rows.
+        /// </summary>
+        private static int WriteDetailRows(
+            IXLWorksheet worksheet,
+            IEnumerable<ReserveScheduleRow> schedule)
+        {
+            ArgumentNullException.ThrowIfNull(worksheet);
+            ArgumentNullException.ThrowIfNull(schedule);
+
+            var row = FirstDataRow;
 
             foreach (var item in schedule)
             {
-                worksheet.Cell($"A{row}").Value = item.Component.Category;
-                worksheet.Cell($"B{row}").Value = item.Component.Component;
-                worksheet.Cell($"C{row}").Value = item.Component.LastReplaced;
-                worksheet.Cell($"D{row}").Value = item.Component.UsefulLife;
-                worksheet.Cell($"E{row}").Value = item.Component.RemainingLife;
-                worksheet.Cell($"F{row}").Value = DateTime.Today.Year + item.Component.RemainingLife;
-                worksheet.Cell($"G{row}").Value = item.Component.ReplacementCost;
-                worksheet.Cell($"H{row}").Value = item.BeginningAllocation;
-                worksheet.Cell($"I{row}").Value = item.FFB;
-                worksheet.Cell($"J{row}").Value = item.RemainingRequired;
-                worksheet.Cell($"K{row}").Value = item.AnnualContribution;
-                worksheet.Cell($"L{row}").Value = item.MonthlyContribution;
-                worksheet.Cell($"M{row}").Value = item.MonthlyCpu;
-                worksheet.Cell($"N{row}").Value = item.FfbWeight;
+                worksheet.Cell(row, 1).Value = item.Component.Category;
+                worksheet.Cell(row, 2).Value = item.Component.Component;
+                worksheet.Cell(row, 3).Value = item.Component.LastReplaced;
+                worksheet.Cell(row, 4).Value = item.Component.UsefulLife;
+                worksheet.Cell(row, 5).Value = item.Component.RemainingLife;
+                worksheet.Cell(row, 6).Value =
+                    DateTime.Today.Year + item.Component.RemainingLife;
+                worksheet.Cell(row, 7).Value = item.Component.ReplacementCost;
+                worksheet.Cell(row, 8).Value = item.BeginningAllocation;
+                worksheet.Cell(row, 9).Value = item.FFB;
+                worksheet.Cell(row, 10).Value = item.RemainingRequired;
+                worksheet.Cell(row, 11).Value = item.AnnualContribution;
+                worksheet.Cell(row, 12).Value = item.MonthlyContribution;
+                worksheet.Cell(row, 13).Value = item.MonthlyCpu;
+                worksheet.Cell(row, 14).Value = item.FfbWeight;
 
                 row++;
             }
 
-            // Totals Row
-            worksheet.Cell($"A{row}").Value = "TOTAL";
+            return row - 1;
+        }
 
-            worksheet.Cell($"G{row}").FormulaA1 = $"SUM(G2:G{row - 1})";
-            worksheet.Cell($"H{row}").FormulaA1 = $"SUM(H2:H{row - 1})";
-            worksheet.Cell($"I{row}").FormulaA1 = $"SUM(I2:I{row - 1})";
-            worksheet.Cell($"J{row}").FormulaA1 = $"SUM(J2:J{row - 1})";
-            worksheet.Cell($"K{row}").FormulaA1 = $"SUM(K2:K{row - 1})";
-            worksheet.Cell($"L{row}").FormulaA1 = $"SUM(L2:L{row - 1})";
-            worksheet.Cell($"M{row}").FormulaA1 = $"SUM(M2:M{row - 1})";
+        /// <summary>
+        /// Writes the totals row for the Reserve Schedule worksheet.
+        /// </summary>
+        private static void WriteTotals(
+            IXLWorksheet worksheet,
+            int totalRow)
+        {
+            ArgumentNullException.ThrowIfNull(worksheet);
 
-            var totalRange = worksheet.Range($"A{row}:N{row}");
+            worksheet.Cell(totalRow, 1).Value = "TOTAL";
 
-            totalRange.Style.Font.Bold = true;
-            totalRange.Style.Fill.BackgroundColor = XLColor.LightSteelBlue;
-            totalRange.Style.Border.TopBorder = XLBorderStyleValues.Thick;
-
-            worksheet.Range("A1:N1")
-                .Style.Font.Bold = true;
-
-            // Freeze the header row
-            worksheet.SheetView.FreezeRows(1);
-
-            // Add AutoFilter
-            worksheet.Range($"A1:N{row - 1}").SetAutoFilter();
-
-            // Format header row
-            var header = worksheet.Range("A1:N1");
-
-            header.Style.Font.Bold = true;
-            header.Style.Fill.BackgroundColor = XLColor.LightGray;
-            header.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
-            header.Style.Alignment.Vertical = XLAlignmentVerticalValues.Center;
-
-            // Format dates
-            worksheet.Column("C").Style.DateFormat.Format = "yyyy";
-
-            // Format currency columns
-            foreach (var column in new[] { "G", "H", "I", "J", "K", "L", "M" })
+            foreach (var column in new[] { 7, 8, 9, 10, 11, 12, 13 })
             {
-                worksheet.Column(column).Style.NumberFormat.Format = "$#,##0";
+                var columnLetter = XLHelper.GetColumnLetterFromNumber(column);
+
+                worksheet.Cell(totalRow, column).FormulaA1 =
+                    $"SUM({columnLetter}{FirstDataRow}:{columnLetter}{totalRow - 1})";
+            }
+        }
+
+        /// <summary>
+        /// Applies formatting to the Reserve Schedule worksheet.
+        /// </summary>
+        private static void FormatWorksheet(
+            IXLWorksheet worksheet,
+            int totalRow)
+        {
+            ArgumentNullException.ThrowIfNull(worksheet);
+
+            // Freeze the header row.
+            worksheet.SheetView.FreezeRows(HeaderRow);
+
+            // Enable filtering.
+            worksheet.Range(
+                HeaderRow,
+                1,
+                totalRow - 1,
+                14)
+                .SetAutoFilter();
+
+            // Format the header row.
+            ExcelStyles.ApplySectionHeader(
+                worksheet.Range(HeaderRow, 1, HeaderRow, 14));
+
+            // Format the totals row.
+            ExcelStyles.ApplyTotalsRow(
+                worksheet.Range(totalRow, 1, totalRow, 14));
+
+            // Year column.
+            worksheet.Column(3).Style.Alignment.Horizontal =
+     XLAlignmentHorizontalValues.Center;
+
+            // Currency columns.
+            foreach (var column in new[] { 7, 8, 9, 10, 11, 12, 13 })
+            {
+                worksheet.Column(column).Style.NumberFormat.Format =
+                    ExcelFormats.Currency;
             }
 
-            // Format percentage column
-            worksheet.Column("N").Style.NumberFormat.Format = "0.00%";
+            // Percentage column.
+            worksheet.Column(14).Style.NumberFormat.Format =
+                ExcelFormats.Percent2;
 
-            // Center numeric life/year columns
-            foreach (var column in new[] { "D", "E", "F" })
+            // Center numeric columns.
+            foreach (var column in new[] { 3, 4, 5, 6 })
             {
-                worksheet.Column(column).Style.Alignment.Horizontal =
+                worksheet.Column(column)
+                    .Style.Alignment.Horizontal =
                     XLAlignmentHorizontalValues.Center;
             }
 
