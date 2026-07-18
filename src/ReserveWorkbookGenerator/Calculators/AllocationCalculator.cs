@@ -27,6 +27,11 @@ public class AllocationCalculator
             row.BeginningAllocation = Money.Round(
 					beginningReservePool * row.FfbWeight);
 
+            row.FundRatio =
+                row.FFB == 0m
+                    ? 0m
+                    : row.BeginningAllocation / row.FFB;
+
             Console.WriteLine(
                 $"{row.Component.Component,-25} " +
                 $"Cost={row.Component.ReplacementCost:C0} " +
