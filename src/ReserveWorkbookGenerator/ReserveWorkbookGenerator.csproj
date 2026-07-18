@@ -14,8 +14,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Excel\" />
     <Folder Include="Constants\" />
+    <Folder Include="Excel\Styles\" />
+    <Folder Include="Exporters\" />
   </ItemGroup>
 
 </Project>
