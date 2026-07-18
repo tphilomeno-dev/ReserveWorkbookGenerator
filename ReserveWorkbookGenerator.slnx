@@ -6,6 +6,7 @@
     <File Path="FundingMethodology.md" />
     <File Path="FundingResearch.md" />
     <File Path="Git Commands.txt" />
+    <File Path="WorkbookDesign.md" />
   </Folder>
   <Folder Name="/docs/Research/">
     <File Path="FFB-Research.xlsx" />
