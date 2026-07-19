@@ -8,7 +8,7 @@ namespace ReserveWorkbookGenerator.Excel.Sheets
 {
     public class ReserveScheduleSheet
     {
-        private const string WorksheetName = "02 Reserve Schedule";
+        private const string WorksheetName = "03 Reserve Schedule";
 
         private const int HeaderRow = 1;
         private const int FirstDataRow = 2;

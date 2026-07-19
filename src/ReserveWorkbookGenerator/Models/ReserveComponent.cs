@@ -4,7 +4,7 @@ public class ReserveComponent
 {
     public int Id { get; set; }
 
-    public ReserveType ComponentType { get; set; }
+    public ReserveType Type { get; set; }
 
     public string Category { get; set; } = "";
     public string Name { get; set; } = "";

@@ -8,7 +8,7 @@ namespace ReserveWorkbookGenerator.Excel.Sheets
 {
     public class FundingScheduleSheet
     {
-        private const string WorksheetName = "03 Funding Schedule";
+        private const string WorksheetName = "04 Funding Schedule";
 
         private const int HeaderRow = 1;
         private const int FirstDataRow = 2;

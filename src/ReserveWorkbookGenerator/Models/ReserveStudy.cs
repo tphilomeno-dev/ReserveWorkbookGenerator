@@ -12,10 +12,10 @@ public sealed class ReserveStudy
 
     // Component Collections
     public IEnumerable<ReserveComponent> SirsComponents =>
-        Components.Where(c => c.ComponentType == ReserveType.Sirs);
+        Components.Where(c => c.Type == ReserveType.Sirs);
 
     public IEnumerable<ReserveComponent> NonSirsComponents =>
-        Components.Where(c => c.ComponentType == ReserveType.NonSirs);
+        Components.Where(c => c.Type == ReserveType.NonSirs);
 
     // Summary Counts
     public int SirsComponentCount => SirsComponents.Count();

@@ -43,7 +43,7 @@ var outputFile = Path.Combine(
     AppContext.BaseDirectory,
     "Grand Cove Reserve Workbook.xlsx");
 
-exporter.Export(outputFile, schedule);
+exporter.Export(outputFile, study, schedule);
 
 Console.WriteLine($"Workbook written to: {outputFile}");
 

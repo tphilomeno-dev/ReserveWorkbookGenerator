@@ -31,7 +31,7 @@ namespace ReserveWorkbookGenerator.Excel.Sheets
         XLWorkbook workbook,
         IEnumerable<ReserveScheduleRow> schedule)
         {
-            var worksheet = workbook.Worksheets.Add("01 Executive Summary");
+            var worksheet = workbook.Worksheets.Add("02 Executive Summary");
 
             var summary = BuildExecutiveSummaryModel(schedule);
 

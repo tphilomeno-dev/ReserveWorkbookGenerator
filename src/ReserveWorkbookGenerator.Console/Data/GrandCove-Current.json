@@ -235,9 +235,9 @@
       "type": "NonSirs",
       "category": "Mechanical",
       "name": "Elevator Modernization",
-      "lastReplaced": 2017,
+      "lastReplaced": 2026,
       "usefulLife": 20,
-      "remainingLife": 12,
+      "remainingLife": 20,
       "replacementCost": 150000.00,
       "comments": "Two elevators."
     }
