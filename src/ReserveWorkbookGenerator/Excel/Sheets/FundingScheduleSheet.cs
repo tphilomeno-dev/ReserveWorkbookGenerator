@@ -12,7 +12,7 @@ namespace ReserveWorkbookGenerator.Excel.Sheets
 
         private const int HeaderRow = 1;
         private const int FirstDataRow = 2;
-        private const int ColumnCount = 8;
+        private const int ColumnCount = 7;
         /// <summary>
         /// Builds the Reserve Funding worksheet.
         /// </summary>
@@ -31,9 +31,15 @@ namespace ReserveWorkbookGenerator.Excel.Sheets
                 worksheet,
                 schedule);
 
+            var totalRow = lastDataRow + 1;
+
+            WriteTotals(
+                worksheet,
+                totalRow);
+
             FormatWorksheet(
                 worksheet,
-                lastDataRow);
+                totalRow);
         }
         /// <summary>
         /// Writes the worksheet column headers.
@@ -48,7 +54,6 @@ namespace ReserveWorkbookGenerator.Excel.Sheets
                 "Reserve Component",
                 "Beginning Allocation",
                 "Fully Funded Balance",
-                "Fund Ratio",
                 "Remaining Required",
                 "Annual Contribution",
                 "Monthly Contribution",
@@ -75,14 +80,13 @@ namespace ReserveWorkbookGenerator.Excel.Sheets
 
             foreach (var item in schedule)
             {
-                worksheet.Cell(row, 1).Value = item.Component.Component;
+                worksheet.Cell(row, 1).Value = item.Name.Name;
                 worksheet.Cell(row, 2).Value = item.BeginningAllocation;
                 worksheet.Cell(row, 3).Value = item.FFB;
-                worksheet.Cell(row, 4).Value = item.FundRatio;
-                worksheet.Cell(row, 5).Value = item.RemainingRequired;
-                worksheet.Cell(row, 6).Value = item.AnnualContribution;
-                worksheet.Cell(row, 7).Value = item.MonthlyContribution;
-                worksheet.Cell(row, 8).Value = item.MonthlyCpu;
+                worksheet.Cell(row, 4).Value = item.RemainingRequired;
+                worksheet.Cell(row, 5).Value = item.AnnualContribution;
+                worksheet.Cell(row, 6).Value = item.MonthlyContribution;
+                worksheet.Cell(row, 7).Value = item.MonthlyCpu;
 
                 row++;
             }
@@ -119,22 +123,47 @@ namespace ReserveWorkbookGenerator.Excel.Sheets
                     ColumnCount));
 
             // Format currency columns.
-            foreach (var column in new[] { 2, 3, 5, 6, 7, 8 })
+            foreach (var column in new[] { 2, 3, 4, 5, 6, 7 })
             {
                 worksheet.Column(column).Style.NumberFormat.Format =
                     ExcelFormats.Currency;
             }
 
-            // Format percentage column.
-            worksheet.Column(4).Style.NumberFormat.Format =
-                ExcelFormats.Percent;
+            //// Format percentage column.
+            //worksheet.Column(4).Style.NumberFormat.Format =
+            //    ExcelFormats.Percent;
 
-            // Center the percentage column.
-            worksheet.Column(4).Style.Alignment.Horizontal =
-                XLAlignmentHorizontalValues.Center;
+            //// Center the percentage column.
+            //worksheet.Column(4).Style.Alignment.Horizontal =
+            //    XLAlignmentHorizontalValues.Center;
+
+            // Format the totals row.
+            ExcelStyles.ApplyTotalsRow(
+                worksheet.Range(lastDataRow, 1, lastDataRow, ColumnCount));
 
             // Auto-size all columns.
             worksheet.Columns().AdjustToContents();
         }
+        /// <summary>
+        /// Writes the totals row for the Reserve Schedule worksheet.
+        /// </summary>
+        private static void WriteTotals(
+            IXLWorksheet worksheet,
+            int totalRow)
+        {
+            ArgumentNullException.ThrowIfNull(worksheet);
+
+            worksheet.Cell(totalRow, 1).Value = "TOTAL";
+
+            foreach (var column in new[] { 2, 3, 4, 5, 6, 7 })
+            {
+                var columnLetter = XLHelper.GetColumnLetterFromNumber(column);
+
+                worksheet.Cell(totalRow, column).FormulaA1 =
+                    $"SUM({columnLetter}{FirstDataRow}:{columnLetter}{totalRow - 1})";
+            }
+        }
     }
+
+
 }

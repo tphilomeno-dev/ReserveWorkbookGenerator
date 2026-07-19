@@ -15,9 +15,9 @@ public class AnnualContributionCalculatorTests
         {
             new()
             {
-                Component = new ReserveComponent
+                Name = new ReserveComponent
                 {
-                    Component = "Roof",
+                    Name = "Roof",
                     RemainingLife = 10
                 },
 
@@ -26,7 +26,7 @@ public class AnnualContributionCalculatorTests
             }
         };
 
-        rows[0].Component.ReplacementCost = 500000m;
+        rows[0].Name.ReplacementCost = 500000m;
 
         var settings = new ReserveSettings
         {
@@ -57,7 +57,7 @@ public class AnnualContributionCalculatorTests
         {
             new()
             {
-                Component = new ReserveComponent
+                Name = new ReserveComponent
                 {
                     RemainingLife = 10,
                     ReplacementCost = 500000m

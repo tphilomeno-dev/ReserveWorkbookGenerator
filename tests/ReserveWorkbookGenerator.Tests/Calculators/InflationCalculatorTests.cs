@@ -14,7 +14,7 @@ public class InflationCalculatorTests
 
         var component = new ReserveComponent
         {
-            Component = "Roof",
+            Name = "Roof",
             ReplacementCost = 610000m
         };
 

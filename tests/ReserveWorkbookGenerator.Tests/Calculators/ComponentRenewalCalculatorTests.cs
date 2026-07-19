@@ -14,7 +14,7 @@ public class ComponentRenewalCalculatorTests
 
         var component = new ReserveComponent
         {
-            Component = "Roof",
+            Name = "Roof",
             RemainingLife = 0,
             UsefulLife = 38,
             LastReplaced = 2006
@@ -41,7 +41,7 @@ public class ComponentRenewalCalculatorTests
 
         var component = new ReserveComponent
         {
-            Component = "Roof",
+            Name = "Roof",
             RemainingLife = 5,
             UsefulLife = 38,
             LastReplaced = 2006

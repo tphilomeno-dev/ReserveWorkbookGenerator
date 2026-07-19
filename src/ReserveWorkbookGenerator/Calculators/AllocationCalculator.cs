@@ -31,11 +31,6 @@ public class AllocationCalculator
                 row.FFB == 0m
                     ? 0m
                     : row.BeginningAllocation / row.FFB;
-
-            Console.WriteLine(
-                $"{row.Component.Component,-25} " +
-                $"Cost={row.Component.ReplacementCost:C0} " +
-                $"Allocated={row.BeginningAllocation:C0}");
         }
 
         // Components are capped at their funding target.

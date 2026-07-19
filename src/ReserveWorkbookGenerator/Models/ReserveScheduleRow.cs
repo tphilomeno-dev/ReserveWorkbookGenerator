@@ -4,7 +4,7 @@ namespace ReserveWorkbookGenerator.Models;
 
 public sealed class ReserveScheduleRow
 {
-    public ReserveComponent Component { get; init; } = null!;
+    public ReserveComponent Name { get; init; } = null!;
 
     public decimal FFB { get; set; }
 
@@ -36,7 +36,7 @@ public sealed class ReserveScheduleRow
     {
         return new ReserveScheduleRow
         {
-            Component = Component.Clone(),
+            Name = Name.Clone(),
 
             FFB = FFB,
             FfbWeight = FfbWeight,

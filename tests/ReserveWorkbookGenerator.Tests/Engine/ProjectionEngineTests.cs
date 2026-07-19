@@ -113,7 +113,7 @@ public class ProjectionEngineTests
         {
             Id = 1,
             Category = "Roofing",
-            Component = "Roof Tiles",
+            Name = "Roof Tiles",
             LastReplaced = 2006,
             UsefulLife = 38,
             RemainingLife = 18,
@@ -172,7 +172,7 @@ public class ProjectionEngineTests
             {
                 Id = 1,
                 Category = "Roofing",
-                Component = "Roof",
+                Name = "Roof",
                 LastReplaced = 2006,
                 UsefulLife = 38,
                 RemainingLife = 18,
@@ -201,10 +201,10 @@ public class ProjectionEngineTests
 
         year.Schedule.Should().HaveCount(1);
 
-        year.Schedule[0].Component.Component
+        year.Schedule[0].Name.Name
             .Should().Be("Roof");
 
-        year.Schedule[0].Component.RemainingLife
+        year.Schedule[0].Name.RemainingLife
             .Should().Be(18);
     }
     [Fact]
@@ -230,7 +230,7 @@ public class ProjectionEngineTests
             {
                 Id = 1,
                 Category = "Roofing",
-                Component = "Roof",
+                Name = "Roof",
                 LastReplaced = 2006,
                 UsefulLife = 38,
                 RemainingLife = 18,
@@ -255,11 +255,11 @@ public class ProjectionEngineTests
 
         projection.Years.Should().HaveCount(5);
 
-        projection.Years[0].Schedule[0].Component.RemainingLife.Should().Be(18);
-        projection.Years[1].Schedule[0].Component.RemainingLife.Should().Be(17);
-        projection.Years[2].Schedule[0].Component.RemainingLife.Should().Be(16);
-        projection.Years[3].Schedule[0].Component.RemainingLife.Should().Be(15);
-        projection.Years[4].Schedule[0].Component.RemainingLife.Should().Be(14);
+        projection.Years[0].Schedule[0].Name.RemainingLife.Should().Be(18);
+        projection.Years[1].Schedule[0].Name.RemainingLife.Should().Be(17);
+        projection.Years[2].Schedule[0].Name.RemainingLife.Should().Be(16);
+        projection.Years[3].Schedule[0].Name.RemainingLife.Should().Be(15);
+        projection.Years[4].Schedule[0].Name.RemainingLife.Should().Be(14);
     }
     [Fact]
     public void Should_Calculate_Annual_Contributions_From_Schedule()
@@ -284,7 +284,7 @@ public class ProjectionEngineTests
             {
                 Id = 1,
                 Category = "Roofing",
-                Component = "Roof",
+                Name = "Roof",
                 LastReplaced = 2006,
                 UsefulLife = 38,
                 RemainingLife = 18,
@@ -338,7 +338,7 @@ public class ProjectionEngineTests
             {
                 Id = 1,
                 Category = "Roofing",
-                Component = "Roof",
+                Name = "Roof",
                 LastReplaced = 2006,
                 UsefulLife = 38,
                 RemainingLife = 18,
@@ -391,7 +391,7 @@ public class ProjectionEngineTests
             {
                 Id = 1,
                 Category = "Roofing",
-                Component = "Roof",
+                Name = "Roof",
                 LastReplaced = 2006,
                 UsefulLife = 38,
                 RemainingLife = 18,
@@ -427,7 +427,7 @@ public class ProjectionEngineTests
 
         var component = new ReserveComponent
         {
-            Component = "Roof",
+            Name = "Roof",
             RemainingLife = 1,
             ReplacementCost = 100000m
         };
@@ -459,7 +459,7 @@ public class ProjectionEngineTests
             {
                 Id = 1,
                 Category = "Roofing",
-                Component = "Roof",
+                Name = "Roof",
                 RemainingLife = 0,
                 UsefulLife = 38,
                 ReplacementCost = 600000m
@@ -511,7 +511,7 @@ public class ProjectionEngineTests
             {
                 Id = 1,
                 Category = "Roofing",
-                Component = "Roof",
+                Name = "Roof",
                 RemainingLife = 0,
                 UsefulLife = 38,
                 ReplacementCost = 600000m
@@ -573,7 +573,7 @@ public class ProjectionEngineTests
             {
                 Id = 1,
                 Category = "Roofing",
-                Component = "Roof",
+                Name = "Roof",
                 RemainingLife = 10,
                 UsefulLife = 30,
                 ReplacementCost = 600000m

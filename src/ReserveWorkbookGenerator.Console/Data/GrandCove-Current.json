@@ -20,34 +20,226 @@
 
   "components": [
     {
-      "id": 1,
+      "id": 101,
+      "type": "Sirs",
       "category": "Roofing",
-      "component": "Roof Tiles",
+      "name": "Roof Tiles",
+      "lastReplaced": 2023,
+      "usefulLife": 30,
+      "remainingLife": 28,
+      "replacementCost": 567000.00,
+      "comments": ""
+    },
+    {
+      "id": 102,
+      "type": "Sirs",
+      "category": "Roofing",
+      "name": "Roof TPO",
+      "lastReplaced": 2023,
+      "usefulLife": 20,
+      "remainingLife": 18,
+      "replacementCost": 22000.00,
+      "comments": ""
+    },
+    {
+      "id": 301,
+      "type": "Sirs",
+      "category": "Exterior",
+      "name": "Exterior Paint / Waterproofing",
+      "lastReplaced": 2023,
+      "usefulLife": 10,
+      "remainingLife": 8,
+      "replacementCost": 161000.00,
+      "comments": "Includes walkways."
+    },
+    {
+      "id": 302,
+      "type": "Sirs",
+      "category": "Exterior",
+      "name": "Exterior Common Doors",
+      "lastReplaced": 2006,
+      "usefulLife": 50,
+      "remainingLife": 31,
+      "replacementCost": 54000.00,
+      "comments": "4 double doors, 3 single doors."
+    },
+    {
+      "id": 401,
+      "type": "Sirs",
+      "category": "Life Safety",
+      "name": "FACP A/V Alarm",
+      "lastReplaced": 2024,
+      "usefulLife": 10,
+      "remainingLife": 9,
+      "replacementCost": 40000.00,
+      "comments": "Includes panels, pulls, strobes and future sprinkler head replacement in garage."
+    },
+    {
+      "id": 501,
+      "type": "Sirs",
+      "category": "Mechanical",
+      "name": "Plumbing",
+      "lastReplaced": 2006,
+      "usefulLife": 60,
+      "remainingLife": 41,
+      "replacementCost": 70000.00,
+      "comments": ""
+    },
+    {
+      "id": 502,
+      "type": "Sirs",
+      "category": "Mechanical",
+      "name": "Electrical Services",
+      "lastReplaced": 2006,
+      "usefulLife": 60,
+      "remainingLife": 41,
+      "replacementCost": 40000.00,
+      "comments": "Panels and meter sockets."
+    },
+    {
+      "id": 503,
+      "type": "Sirs",
+      "category": "Mechanical",
+      "name": "HVAC 2.5 Ton (Existing)",
+      "lastReplaced": 2015,
+      "usefulLife": 10,
+      "remainingLife": 0,
+      "replacementCost": 7500.00,
+      "comments": ""
+    },
+    {
+      "id": 504,
+      "type": "Sirs",
+      "category": "Mechanical",
+      "name": "HVAC 2.5 Ton (Replacement Cycle)",
+      "lastReplaced": 2024,
+      "usefulLife": 10,
+      "remainingLife": 9,
+      "replacementCost": 7500.00,
+      "comments": ""
+    },
+    {
+      "id": 201,
+      "type": "Sirs",
+      "category": "Structural",
+      "name": "Concrete Restoration",
+      "lastReplaced": 2023,
+      "usefulLife": 20,
+      "remainingLife": 18,
+      "replacementCost": 150000.00,
+      "comments": "State mandated structural reserve component."
+    },
+
+
+    {
+      "id": 601,
+      "type": "NonSirs",
+      "category": "Site",
+      "name": "Asphalt Mill / Repave",
       "lastReplaced": 2006,
       "usefulLife": 30,
-      "remainingLife": 18,
-      "replacementCost": 610000.00,
-      "comments": "Clay tile roof replacement."
+      "remainingLife": 11,
+      "replacementCost": 23600.00,
+      "comments": ""
     },
     {
-      "id": 2,
-      "category": "Painting",
-      "component": "Exterior Paint",
-      "lastReplaced": 2022,
-      "usefulLife": 8,
-      "remainingLife": 4,
-      "replacementCost": 165000.00,
-      "comments": "Complete exterior repaint."
-    },
-    {
-      "id": 3,
-      "category": "Elevators",
-      "component": "Elevator Modernization",
+      "id": 602,
+      "type": "NonSirs",
+      "category": "Site",
+      "name": "Brick Paver Surfaces",
       "lastReplaced": 2006,
-      "usefulLife": 25,
+      "usefulLife": 35,
+      "remainingLife": 16,
+      "replacementCost": 27000.00,
+      "comments": ""
+    },
+    {
+      "id": 603,
+      "type": "NonSirs",
+      "category": "Site",
+      "name": "Landscape / Irrigation",
+      "lastReplaced": 2024,
+      "usefulLife": 15,
+      "remainingLife": 14,
+      "replacementCost": 50000.00,
+      "comments": ""
+    },
+    {
+      "id": 604,
+      "type": "NonSirs",
+      "category": "Site",
+      "name": "Docks",
+      "lastReplaced": 2006,
+      "usefulLife": 60,
+      "remainingLife": 41,
+      "replacementCost": 50000.00,
+      "comments": "Deferred maintenance reserve."
+    },
+    {
+      "id": 605,
+      "type": "NonSirs",
+      "category": "Site",
+      "name": "Seawall",
+      "lastReplaced": 2006,
+      "usefulLife": 60,
+      "remainingLife": 41,
+      "replacementCost": 100000.00,
+      "comments": "Deferred maintenance reserve."
+    },
+    {
+      "id": 606,
+      "type": "NonSirs",
+      "category": "Site",
+      "name": "Dock Pedestals",
+      "lastReplaced": 2006,
+      "usefulLife": 60,
+      "remainingLife": 41,
+      "replacementCost": 30000.00,
+      "comments": "Does not include dock electrical main panel."
+    },
+    {
+      "id": 701,
+      "type": "NonSirs",
+      "category": "Recreation",
+      "name": "Pool Equipment / Heater",
+      "lastReplaced": 2018,
+      "usefulLife": 10,
+      "remainingLife": 3,
+      "replacementCost": 20000.00,
+      "comments": "$10,000 every 10 years for equipment and heater."
+    },
+    {
+      "id": 702,
+      "type": "NonSirs",
+      "category": "Recreation",
+      "name": "Pool Fence",
+      "lastReplaced": 2024,
+      "usefulLife": 20,
+      "remainingLife": 19,
+      "replacementCost": 22500.00,
+      "comments": ""
+    },
+    {
+      "id": 703,
+      "type": "NonSirs",
+      "category": "Recreation",
+      "name": "Pool Resurface",
+      "lastReplaced": 2024,
+      "usefulLife": 20,
+      "remainingLife": 19,
+      "replacementCost": 27000.00,
+      "comments": "Market cost of $20/SF used instead of association estimate."
+    },
+    {
+      "id": 551,
+      "type": "NonSirs",
+      "category": "Mechanical",
+      "name": "Elevator Modernization",
+      "lastReplaced": 2017,
+      "usefulLife": 20,
       "remainingLife": 12,
-      "replacementCost": 285000.00,
-      "comments": "Modernize both elevators."
+      "replacementCost": 150000.00,
+      "comments": "Two elevators."
     }
   ]
 }

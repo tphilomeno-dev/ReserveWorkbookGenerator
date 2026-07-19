@@ -19,7 +19,7 @@ public class AnnualContributionCalculator
             //
             row.RemainingRequired = Math.Max(
                 0,
-                row.Component.ReplacementCost - row.BeginningAllocation);
+                row.Name.ReplacementCost - row.BeginningAllocation);
 
             //
             // Fully funded (or over-funded) components receive no
@@ -38,7 +38,7 @@ public class AnnualContributionCalculator
             // the component over its remaining life.
             //
             row.AnnualContribution = Money.Round(
-                row.RemainingRequired / row.Component.RemainingLife);
+                row.RemainingRequired / row.Name.RemainingLife);
 
             row.MonthlyContribution = Money.Round(
                 row.AnnualContribution / 12);

@@ -29,17 +29,19 @@ namespace ReserveWorkbookGenerator.Excel.Sheets
 
             WriteHeaders(worksheet);
 
-            var lastRow = WriteDetailRows(
+            var lastDataRow = WriteDetailRows(
                 worksheet,
                 schedule);
 
+            var totalRow = lastDataRow + 1;
+
             WriteTotals(
                 worksheet,
-                lastRow);
+                totalRow);
 
             FormatWorksheet(
                 worksheet,
-                lastRow);
+                totalRow);
         }
         /// <summary>
         /// Writes the Reserve Schedule column headers.
@@ -52,7 +54,7 @@ namespace ReserveWorkbookGenerator.Excel.Sheets
             string[] headers =
             {
         "Category",
-        "Reserve Component",
+        "Name",
         "Last Replaced",
         "Useful Life",
         "Remaining Life",
@@ -87,14 +89,14 @@ namespace ReserveWorkbookGenerator.Excel.Sheets
 
             foreach (var item in schedule)
             {
-                worksheet.Cell(row, 1).Value = item.Component.Category;
-                worksheet.Cell(row, 2).Value = item.Component.Component;
-                worksheet.Cell(row, 3).Value = item.Component.LastReplaced;
-                worksheet.Cell(row, 4).Value = item.Component.UsefulLife;
-                worksheet.Cell(row, 5).Value = item.Component.RemainingLife;
+                worksheet.Cell(row, 1).Value = item.Name.Category;
+                worksheet.Cell(row, 2).Value = item.Name.Name;
+                worksheet.Cell(row, 3).Value = item.Name.LastReplaced;
+                worksheet.Cell(row, 4).Value = item.Name.UsefulLife;
+                worksheet.Cell(row, 5).Value = item.Name.RemainingLife;
                 worksheet.Cell(row, 6).Value =
-                    DateTime.Today.Year + item.Component.RemainingLife;
-                worksheet.Cell(row, 7).Value = item.Component.ReplacementCost;
+                    DateTime.Today.Year + item.Name.RemainingLife;
+                worksheet.Cell(row, 7).Value = item.Name.ReplacementCost;
                 worksheet.Cell(row, 8).Value = item.BeginningAllocation;
                 worksheet.Cell(row, 9).Value = item.FFB;
                 worksheet.Cell(row, 10).Value = item.RemainingRequired;

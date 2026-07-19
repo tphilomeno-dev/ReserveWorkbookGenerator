@@ -9,7 +9,7 @@ public class ReserveScheduleBuilder
         return components
             .Select(component => new ReserveScheduleRow
             {
-                Component = component
+                Name =  component
             })
             .ToList();
     }

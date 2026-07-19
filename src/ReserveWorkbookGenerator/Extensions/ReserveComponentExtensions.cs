@@ -11,7 +11,7 @@ public static class ReserveComponentExtensions
         {
             Id = component.Id,
             Category = component.Category,
-            Component = component.Component,
+            Name = component.Name,
             LastReplaced = component.LastReplaced,
             UsefulLife = component.UsefulLife,
             RemainingLife = component.RemainingLife,

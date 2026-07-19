@@ -9,7 +9,7 @@ public class FfbCalculator
     {
         foreach (var row in rows)
         {
-            var component = row.Component;
+            var component = row.Name;
 
             row.FFB = Calculate(
                 component.ReplacementCost,

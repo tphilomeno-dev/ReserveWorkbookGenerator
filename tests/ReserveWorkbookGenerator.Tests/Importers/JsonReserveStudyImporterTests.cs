@@ -31,7 +31,7 @@ public class JsonReserveStudyImporterTests
             {
               "id": 1,
               "category": "Roofing",
-              "component": "Roof",
+              "name": "Roof",
               "lastReplaced": 2006,
               "usefulLife": 30,
               "remainingLife": 20,
@@ -58,6 +58,6 @@ public class JsonReserveStudyImporterTests
         study.Settings.BeginningReservePool.Should().Be(1_250_000m);
 
         study.Components.Should().HaveCount(1);
-        study.Components[0].Component.Should().Be("Roof");
+        study.Components[0].Name.Should().Be("Roof");
     }
 }

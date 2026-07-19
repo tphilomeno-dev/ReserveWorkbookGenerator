@@ -57,7 +57,7 @@ namespace ReserveWorkbookGenerator.Excel.Sheets
             var rows = schedule.ToList();
 
             var totalReplacementCost =
-                rows.Sum(x => x.Component.ReplacementCost);
+                rows.Sum(x => x.Name.ReplacementCost);
 
             var beginningAllocation =
                 rows.Sum(x => x.BeginningAllocation);
@@ -133,7 +133,7 @@ namespace ReserveWorkbookGenerator.Excel.Sheets
             worksheet.Cell("A17").Value = "Fully Funded Balance";
             worksheet.Cell("C17").Value = summary.FullyFundedBalance;
 
-            worksheet.Cell("A18").Value = "Percent Funded";
+            worksheet.Cell("A18").Value = "Percent Funded (Beginning Reserve ÷ FFB)";
             worksheet.Cell("C18").Value = summary.PercentFunded;
 
             worksheet.Cell("A19").Value = "Funding Level";

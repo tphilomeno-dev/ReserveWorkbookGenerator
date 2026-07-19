@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ReserveWorkbookGenerator.Models
 {
-    public enum ReserveComponentType
+    public enum ReserveType
     {
         Sirs,
         NonSirs

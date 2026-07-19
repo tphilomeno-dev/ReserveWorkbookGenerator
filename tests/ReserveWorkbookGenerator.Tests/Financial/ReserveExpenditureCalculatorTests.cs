@@ -16,7 +16,7 @@ public class ReserveExpenditureCalculatorTests
         {
             new ReserveComponent
             {
-                Component = "Roof",
+                Name = "Roof",
                 RemainingLife = 5,
                 ReplacementCost = 600000m
             }
@@ -36,7 +36,7 @@ public class ReserveExpenditureCalculatorTests
         {
             new ReserveComponent
             {
-                Component = "Roof",
+                Name = "Roof",
                 RemainingLife = 0,
                 ReplacementCost = 600000m
             }
@@ -56,13 +56,13 @@ public class ReserveExpenditureCalculatorTests
         {
             new ReserveComponent
             {
-                Component = "Roof",
+                Name = "Roof",
                 RemainingLife = 0,
                 ReplacementCost = 600000m
             },
             new ReserveComponent
             {
-                Component = "Paint",
+                Name = "Paint",
                 RemainingLife = 0,
                 ReplacementCost = 150000m
             }

@@ -28,7 +28,7 @@ Console.WriteLine("Reserve Schedule");
 foreach (var row in schedule)
 {
     Console.WriteLine(
-        $"{row.Component.Component,-30}" +
+        $"{row.Name,-30}" +
         $" FFB={row.FFB,12:C0}" +
         $" Begin={row.BeginningAllocation,12:C0}" +
         $" Remaining={row.RemainingRequired,12:C0}" +
@@ -56,7 +56,7 @@ Process.Start(new ProcessStartInfo
 foreach (var row in schedule)
 {
     Console.WriteLine(
-        $"{row.Component.Component,-30} " +
+        $"{row.Name,-30} " +
         $"FFB = {row.FFB:C0}  " +
         $"Weight = {row.FfbWeight:P2}  " +
         $"Allocation = {row.BeginningAllocation:C0}");

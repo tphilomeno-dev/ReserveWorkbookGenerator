@@ -17,7 +17,7 @@ public class ReserveEngineTests
             {
                 Id = 1,
                 Category = "Roofing",
-                Component = "Roof",
+                Name = "Roof",
                 LastReplaced = 2006,
                 UsefulLife = 30,
                 RemainingLife = 20,
@@ -27,7 +27,7 @@ public class ReserveEngineTests
             {
                 Id = 2,
                 Category = "Painting",
-                Component = "Paint",
+                Name = "Paint",
                 LastReplaced = 2022,
                 UsefulLife = 8,
                 RemainingLife = 4,
@@ -55,13 +55,13 @@ public class ReserveEngineTests
 
         schedule.Should().HaveCount(2);
 
-        schedule[0].Component.Component.Should().Be("Roof");
+        schedule[0].Name.Name.Should().Be("Roof");
         schedule[0].FFB.Should().Be(200000m);
-        schedule[0].Component.Category.Should().Be("Roofing");
-        schedule[0].Component.ReplacementCost.Should().Be(600000m);
+        schedule[0].Name.Category.Should().Be("Roofing");
+        schedule[0].Name.ReplacementCost.Should().Be(600000m);
 
-        schedule[1].Component.UsefulLife.Should().Be(8);
-        schedule[1].Component.Component.Should().Be("Paint");
+        schedule[1].Name.UsefulLife.Should().Be(8);
+        schedule[1].Name.Name.Should().Be("Paint");
         schedule[1].FFB.Should().Be(80000m);
     }
 }

@@ -30,7 +30,7 @@ public class ScenarioEngineTests
             {
                 Id = 1,
                 Category = "Roofing",
-                Component = "Roof",
+                Name = "Roof",
                 RemainingLife = 18,
                 UsefulLife = 38,
                 ReplacementCost = 610000m

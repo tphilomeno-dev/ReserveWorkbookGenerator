@@ -14,25 +14,25 @@ public class AllocationCalculatorTests
         {
             new()
             {
-                Component = new ReserveComponent
-                {
-                    Component = "Roof"
-                },
+                Name = new ReserveComponent{
+                Name = "Roof"
+            },
                 FFB = 200000m
             },
             new()
             {
-                Component = new ReserveComponent
+                Name = new ReserveComponent
                 {
-                    Component = "Paint"
+                    Name = "Paint"
                 },
                 FFB = 100000m
             },
             new()
             {
-                Component = new ReserveComponent
+                Name = new ReserveComponent
                 {
-                    Component = "Pool"
+                    Name = "Pool"
+
                 },
                 FFB = 200000m
             }
