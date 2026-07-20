@@ -15,6 +15,7 @@
     <File Path="CHANGELOG.md" />
     <File Path="README.md" />
   </Folder>
+  <Project Path="ReserveWorkbookGenerator.Editor/ReserveWorkbookGenerator.Editor.csproj" Id="a36f8a82-0f0c-4d44-9c97-ee573ac6b25a" />
   <Project Path="src/ReserveWorkbookGenerator.Console/ReserveWorkbookGenerator.Console.csproj" />
   <Project Path="src/ReserveWorkbookGenerator/ReserveWorkbookGenerator.csproj" />
   <Project Path="tests/ReserveWorkbookGenerator.Tests/ReserveWorkbookGenerator.Tests.csproj" />
