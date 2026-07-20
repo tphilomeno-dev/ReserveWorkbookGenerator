@@ -53,12 +53,20 @@
             btnGenerate = new ToolStripButton();
             btnValidate = new ToolStripButton();
             tabControl = new TabControl();
-            this.tabStudy = new TabPage();
+            tabStudy = new TabPage();
+            statusStrip = new StatusStrip();
+            lblStatus = new ToolStripStatusLabel();
+            lblSpacer = new ToolStripStatusLabel();
+            lblFile = new ToolStripStatusLabel();
             tabSettings = new TabPage();
             tabComponents = new TabPage();
+            dgvComponents = new DataGridView();
             MenuStrip.SuspendLayout();
             toolStrip.SuspendLayout();
             tabControl.SuspendLayout();
+            statusStrip.SuspendLayout();
+            tabComponents.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvComponents).BeginInit();
             SuspendLayout();
             // 
             // MenuStrip
@@ -174,7 +182,7 @@
             // mnuHelpAbout
             // 
             mnuHelpAbout.Name = "mnuHelpAbout";
-            mnuHelpAbout.Size = new Size(180, 22);
+            mnuHelpAbout.Size = new Size(107, 22);
             mnuHelpAbout.Text = "About";
             mnuHelpAbout.Click += mnuHelpAbout_Click;
             // 
@@ -234,7 +242,7 @@
             // 
             // tabControl
             // 
-            tabControl.Controls.Add(this.tabStudy);
+            tabControl.Controls.Add(tabStudy);
             tabControl.Controls.Add(tabSettings);
             tabControl.Controls.Add(tabComponents);
             tabControl.Dock = DockStyle.Fill;
@@ -246,13 +254,40 @@
             // 
             // tabStudy
             // 
-            this.tabStudy.Location = new Point(4, 24);
-            this.tabStudy.Name = "tabStudy";
-            this.tabStudy.Padding = new Padding(3);
-            this.tabStudy.Size = new Size(1176, 684);
-            this.tabStudy.TabIndex = 0;
-            this.tabStudy.Text = "Study";
-            this.tabStudy.UseVisualStyleBackColor = true;
+            tabStudy.Location = new Point(4, 24);
+            tabStudy.Name = "tabStudy";
+            tabStudy.Padding = new Padding(3);
+            tabStudy.Size = new Size(1176, 684);
+            tabStudy.TabIndex = 0;
+            tabStudy.Text = "Study";
+            tabStudy.UseVisualStyleBackColor = true;
+            // 
+            // statusStrip
+            // 
+            statusStrip.Items.AddRange(new ToolStripItem[] { lblStatus, lblSpacer, lblFile });
+            statusStrip.Location = new Point(0, 739);
+            statusStrip.Name = "statusStrip";
+            statusStrip.Size = new Size(1184, 22);
+            statusStrip.TabIndex = 0;
+            statusStrip.Text = "statusStrip1";
+            // 
+            // lblStatus
+            // 
+            lblStatus.Name = "lblStatus";
+            lblStatus.Size = new Size(39, 17);
+            lblStatus.Text = "Ready";
+            // 
+            // lblSpacer
+            // 
+            lblSpacer.Name = "lblSpacer";
+            lblSpacer.Size = new Size(1013, 17);
+            lblSpacer.Spring = true;
+            // 
+            // lblFile
+            // 
+            lblFile.Name = "lblFile";
+            lblFile.Size = new Size(86, 17);
+            lblFile.Text = "No File Loaded";
             // 
             // tabSettings
             // 
@@ -266,6 +301,7 @@
             // 
             // tabComponents
             // 
+            tabComponents.Controls.Add(dgvComponents);
             tabComponents.Location = new Point(4, 24);
             tabComponents.Name = "tabComponents";
             tabComponents.Size = new Size(1176, 684);
@@ -273,11 +309,30 @@
             tabComponents.Text = "Components";
             tabComponents.UseVisualStyleBackColor = true;
             // 
+            // dgvComponents
+            // 
+            dgvComponents.AllowUserToAddRows = false;
+            dgvComponents.AllowUserToDeleteRows = false;
+            dgvComponents.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvComponents.Dock = DockStyle.Fill;
+            dgvComponents.Location = new Point(0, 0);
+            dgvComponents.MultiSelect = false;
+            dgvComponents.Name = "dgvComponents";
+            dgvComponents.RowHeadersVisible = false;
+            dgvComponents.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvComponents.Size = new Size(1176, 684);
+            dgvComponents.TabIndex = 0;
+            dgvComponents.CellValueChanged += dgvComponents_CellValueChanged;
+            dgvComponents.CurrentCellDirtyStateChanged += dgvComponents_CurrentCellDirtyStateChanged;
+            //dgvComponents.CellValidating += dgvComponents_CellValidating;
+            //dgvComponents.DataError += dgvComponents_DataError;
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1184, 761);
+            Controls.Add(statusStrip);
             Controls.Add(tabControl);
             Controls.Add(toolStrip);
             Controls.Add(MenuStrip);
@@ -293,6 +348,10 @@
             toolStrip.ResumeLayout(false);
             toolStrip.PerformLayout();
             tabControl.ResumeLayout(false);
+            statusStrip.ResumeLayout(false);
+            statusStrip.PerformLayout();
+            tabComponents.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)dgvComponents).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -328,5 +387,10 @@
         private ToolStripButton btnGenerate;
         private ToolStripButton btnValidate;
         private TabPage tabComponents;
+        private StatusStrip statusStrip;
+        private ToolStripStatusLabel lblStatus;
+        private ToolStripStatusLabel lblSpacer;
+        private ToolStripStatusLabel lblFile;
+        private DataGridView dgvComponents;
     }
 }
