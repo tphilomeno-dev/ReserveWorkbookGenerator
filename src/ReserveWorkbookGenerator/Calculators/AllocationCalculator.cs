@@ -5,37 +5,65 @@ namespace ReserveWorkbookGenerator.Calculators;
 
 public class AllocationCalculator
 {
-	public void Execute(
-		IList<ReserveScheduleRow> rows,
-		decimal beginningReservePool)
-	{
-		if (rows == null)
-			throw new ArgumentNullException(nameof(rows));
+    public void Execute(
+    IList<ReserveScheduleRow> rows,
+    ReserveSettings settings)
+    {
+        if (rows == null)
+            throw new ArgumentNullException(nameof(rows));
 
-		if (!rows.Any())
-			return;
+        if (!rows.Any())
+            return;
 
-		decimal totalFfb = rows.Sum(r => r.FFB);
+        decimal totalFfb =
+            rows.Sum(r => r.FFB);
 
-		if (totalFfb <= 0)
-			return;
+        decimal totalReplacementCost =
+            rows.Sum(r => r.Name.ReplacementCost);
 
-		foreach (var row in rows)
-		{
-			row.FfbWeight = Money.Divide(row.FFB, totalFfb);
+        foreach (var row in rows)
+        {
+            decimal weight;
+
+            switch (settings.AllocationMethod)
+            {
+                case AllocationMethod.FullyFundedBalance:
+
+                    weight =
+                        totalFfb == 0
+                            ? 0
+                            : row.FFB / totalFfb;
+
+                    break;
+
+                case AllocationMethod.PercentOfReplacementCost:
+
+                    weight =
+                        totalReplacementCost == 0
+                            ? 0
+                            : row.Name.ReplacementCost / totalReplacementCost;
+
+                    break;
+
+                case AllocationMethod.Manual:
+
+                    continue;
+
+                default:
+
+                    throw new NotSupportedException(
+                        $"Allocation method '{settings.AllocationMethod}' is not supported.");
+            }
+
+            row.FfbWeight = weight;
 
             row.BeginningAllocation = Money.Round(
-					beginningReservePool * row.FfbWeight);
+                settings.BeginningReservePool * weight);
 
             row.FundRatio =
                 row.FFB == 0m
                     ? 0m
                     : row.BeginningAllocation / row.FFB;
         }
-
-        // Components are capped at their funding target.
-        // Any remaining reserve balance is treated as
-        // an unallocated reserve surplus and is reported
-        // separately.
     }
 }

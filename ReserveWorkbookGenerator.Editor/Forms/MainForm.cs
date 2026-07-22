@@ -368,11 +368,10 @@ namespace ReserveWorkbookGenerator.Editor
             mnuFileSave.Enabled = canSave;
             btnSave.Enabled = canSave;
         }
-        private void RefreshUi(ReserveComponent? selectedComponent = null)
+        private void RefreshUi()
         {
             UpdateWindowTitle();
             UpdateSaveState();
-            RefreshComponentGrid(selectedComponent);
             lblFile.Text = _state.DisplayName;
         }
 
@@ -702,18 +701,29 @@ namespace ReserveWorkbookGenerator.Editor
                 }
 
 
-
-
-                string outputFile = _workbookGenerator.Generate(
-                    _state.Study!,
-                    saveFileDialog.FileName);
-
-                lblStatus.Text = "Workbook generated.";
-
-                Process.Start(new ProcessStartInfo(outputFile)
+                try
                 {
-                    UseShellExecute = true
-                });
+                    string outputFile = _workbookGenerator.Generate(
+                                        _state.Study!,
+                                        saveFileDialog.FileName);
+                    lblStatus.Text = "Workbook generated.";
+
+                    Process.Start(new ProcessStartInfo(outputFile)
+                    {
+                        UseShellExecute = true
+                    });
+
+                }
+
+                catch (Exception ex)
+                {
+
+                    MessageBox.Show(ex.Message);
+                }
+
+
+
+                
             }
             catch (Exception ex)
             {
@@ -784,7 +794,7 @@ namespace ReserveWorkbookGenerator.Editor
 
             _state.IsDirty = true;
 
-            RefreshUi(copy);
+            RefreshComponentGrid();
 
             lblStatus.Text = "Component duplicated.";
         }
@@ -830,7 +840,7 @@ namespace ReserveWorkbookGenerator.Editor
 
             _state.IsDirty = true;
 
-            RefreshUi(component);
+            RefreshComponentGrid();
 
             lblStatus.Text = "Component added.";
         }
@@ -884,7 +894,7 @@ namespace ReserveWorkbookGenerator.Editor
 
             _state.IsDirty = true;
 
-            RefreshUi(nextSelection);
+            RefreshComponentGrid();
 
             lblStatus.Text = "Component deleted.";
         }
@@ -918,7 +928,7 @@ namespace ReserveWorkbookGenerator.Editor
 
             _state.IsDirty = true;
 
-            RefreshUi(selectedComponent);
+            RefreshComponentGrid();
 
             lblStatus.Text = direction < 0
                 ? "Component moved up."

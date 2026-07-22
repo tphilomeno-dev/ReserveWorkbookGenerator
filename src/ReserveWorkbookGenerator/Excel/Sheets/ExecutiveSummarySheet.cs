@@ -1,4 +1,6 @@
 ﻿using ClosedXML.Excel;
+using DocumentFormat.OpenXml.Spreadsheet;
+using ReserveWorkbookGenerator.Extensions;
 using ReserveWorkbookGenerator.Analysis;
 using ReserveWorkbookGenerator.Excel.Models;
 using ReserveWorkbookGenerator.Models;
@@ -29,11 +31,12 @@ namespace ReserveWorkbookGenerator.Excel.Sheets
         /// </summary>
         public static void Build(
         XLWorkbook workbook,
-        IEnumerable<ReserveScheduleRow> schedule)
+        IEnumerable<ReserveScheduleRow> schedule,
+        ReserveSettings settings)
         {
             var worksheet = workbook.Worksheets.Add("02 Executive Summary");
 
-            var summary = BuildExecutiveSummaryModel(schedule);
+            var summary = BuildExecutiveSummaryModel(schedule, settings);
 
             WriteTitle(worksheet);
 
@@ -52,7 +55,8 @@ namespace ReserveWorkbookGenerator.Excel.Sheets
             worksheet.Columns().AdjustToContents();
         }
         private static ExecutiveSummaryModel BuildExecutiveSummaryModel(
-    IEnumerable<ReserveScheduleRow> schedule)
+            IEnumerable<ReserveScheduleRow> schedule,
+            ReserveSettings settings)
         {
             var rows = schedule.ToList();
 
@@ -89,7 +93,7 @@ namespace ReserveWorkbookGenerator.Excel.Sheets
 
                 WorkbookVersion = "1.3.0",
 
-                FundingMethod = "Fully Funded Balance (Pooled)",
+                FundingMethod = settings.AllocationMethod.GetDescription(),
 
                 ComponentCount = rows.Count,
 

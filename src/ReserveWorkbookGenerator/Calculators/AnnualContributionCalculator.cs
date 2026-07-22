@@ -37,8 +37,16 @@ public class AnnualContributionCalculator
             // Calculate the annual contribution required to fully fund
             // the component over its remaining life.
             //
-            row.AnnualContribution = Money.Round(
-                row.RemainingRequired / row.Name.RemainingLife);
+            // Component is due this year.
+            if (row.Name.RemainingLife <= 0)
+            {
+                row.AnnualContribution = row.RemainingRequired;
+            }
+            else
+            {
+                row.AnnualContribution = Money.Round(
+                    row.RemainingRequired / row.Name.RemainingLife);
+            }
 
             row.MonthlyContribution = Money.Round(
                 row.AnnualContribution / 12);

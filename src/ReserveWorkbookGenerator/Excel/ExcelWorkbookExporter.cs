@@ -20,7 +20,7 @@ public class ExcelWorkbookExporter
 
         ReserveComponentInventorySheet.Build(workbook, study.Components);
 
-        ExecutiveSummarySheet.Build(workbook, schedule);
+        ExecutiveSummarySheet.Build(workbook, schedule, study.Settings);
 
         ReserveScheduleSheet.Build(workbook, schedule);
 

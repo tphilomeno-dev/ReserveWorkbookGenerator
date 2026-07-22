@@ -17,5 +17,6 @@ namespace ReserveWorkbookGenerator.Models
         public decimal InflationRate { get; set; }
 
         public AllocationMethod AllocationMethod { get; set; }
+            = AllocationMethod.FullyFundedBalance;
     }
 }

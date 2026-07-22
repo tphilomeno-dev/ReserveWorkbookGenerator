@@ -28,14 +28,14 @@ public class ReserveEngine
     {
         var rows = _scheduleBuilder.Build(components);
 
-        _ffbCalculator.Execute(rows);
+        if (settings.AllocationMethod == AllocationMethod.FullyFundedBalance)
+        {
+            _ffbCalculator.Execute(rows);
+        }
 
-        _allocationCalculator.Execute(
-            rows,
-            settings.BeginningReservePool);
+        _allocationCalculator.Execute(rows, settings);
 
-        _annualContributionCalculator.Execute(rows,
-            settings);
+        _annualContributionCalculator.Execute(rows, settings);
 
         return rows;
     }
