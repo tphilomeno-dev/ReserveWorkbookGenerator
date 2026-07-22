@@ -16,3 +16,20 @@
 ### Fixed
 - Snapshot cloning bug
 - Projection timeline initialization
+
+# Changelog
+
+## v1.3.0
+- Added Reserve Study Editor
+- Excel-style component editing
+- JSON open/save support
+- Dirty tracking
+- Workbook generation from editor
+- Status bar and toolbar
+- WorkbookGenerationService
+- JsonReserveStudyExporter
+
+## v1.2.0
+- Added projection engine
+- Added Excel workbook exporter
+- Funding schedule worksheet

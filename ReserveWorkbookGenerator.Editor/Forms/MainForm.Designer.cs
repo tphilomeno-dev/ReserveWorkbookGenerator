@@ -54,19 +54,50 @@
             btnValidate = new ToolStripButton();
             tabControl = new TabControl();
             tabStudy = new TabPage();
+            txtNotes = new TextBox();
+            lblNotes = new Label();
+            txtVersion = new TextBox();
+            lblVersion = new Label();
+            txtPreparedBy = new TextBox();
+            lblPreparedBy = new Label();
+            dtStudyDate = new DateTimePicker();
+            lblStudyDate = new Label();
+            txtPropertyDescription = new TextBox();
+            lblPropertyDescription = new Label();
+            txtAssociationName = new TextBox();
+            lblAssociationName = new Label();
+            tabSettings = new TabPage();
+            cboAllocationMethod = new ComboBox();
+            lblAllocationMethod = new Label();
+            nudInflationRate = new NumericUpDown();
+            lblInflationRate = new Label();
+            nudInterestRate = new NumericUpDown();
+            lblInterestRate = new Label();
+            nudBeginningReservePool = new NumericUpDown();
+            lblBeginReservePool = new Label();
+            nudUnitCount = new NumericUpDown();
+            lblUnitCount = new Label();
+            lblCurrentYear = new Label();
+            nudCurrentYear = new NumericUpDown();
+            tabComponents = new TabPage();
+            dgvComponents = new DataGridView();
             statusStrip = new StatusStrip();
             lblStatus = new ToolStripStatusLabel();
             lblSpacer = new ToolStripStatusLabel();
             lblFile = new ToolStripStatusLabel();
-            tabSettings = new TabPage();
-            tabComponents = new TabPage();
-            dgvComponents = new DataGridView();
             MenuStrip.SuspendLayout();
             toolStrip.SuspendLayout();
             tabControl.SuspendLayout();
-            statusStrip.SuspendLayout();
+            tabStudy.SuspendLayout();
+            tabSettings.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)nudInflationRate).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)nudInterestRate).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)nudBeginningReservePool).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)nudUnitCount).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)nudCurrentYear).BeginInit();
             tabComponents.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvComponents).BeginInit();
+            statusStrip.SuspendLayout();
             SuspendLayout();
             // 
             // MenuStrip
@@ -254,6 +285,18 @@
             // 
             // tabStudy
             // 
+            tabStudy.Controls.Add(txtNotes);
+            tabStudy.Controls.Add(lblNotes);
+            tabStudy.Controls.Add(txtVersion);
+            tabStudy.Controls.Add(lblVersion);
+            tabStudy.Controls.Add(txtPreparedBy);
+            tabStudy.Controls.Add(lblPreparedBy);
+            tabStudy.Controls.Add(dtStudyDate);
+            tabStudy.Controls.Add(lblStudyDate);
+            tabStudy.Controls.Add(txtPropertyDescription);
+            tabStudy.Controls.Add(lblPropertyDescription);
+            tabStudy.Controls.Add(txtAssociationName);
+            tabStudy.Controls.Add(lblAssociationName);
             tabStudy.Location = new Point(4, 24);
             tabStudy.Name = "tabStudy";
             tabStudy.Padding = new Padding(3);
@@ -262,35 +305,126 @@
             tabStudy.Text = "Study";
             tabStudy.UseVisualStyleBackColor = true;
             // 
-            // statusStrip
+            // txtNotes
             // 
-            statusStrip.Items.AddRange(new ToolStripItem[] { lblStatus, lblSpacer, lblFile });
-            statusStrip.Location = new Point(0, 739);
-            statusStrip.Name = "statusStrip";
-            statusStrip.Size = new Size(1184, 22);
-            statusStrip.TabIndex = 0;
-            statusStrip.Text = "statusStrip1";
+            txtNotes.Location = new Point(186, 260);
+            txtNotes.Multiline = true;
+            txtNotes.Name = "txtNotes";
+            txtNotes.Size = new Size(406, 138);
+            txtNotes.TabIndex = 11;
+            txtNotes.TextChanged += txtNotes_TextChanged;
             // 
-            // lblStatus
+            // lblNotes
             // 
-            lblStatus.Name = "lblStatus";
-            lblStatus.Size = new Size(39, 17);
-            lblStatus.Text = "Ready";
+            lblNotes.AutoSize = true;
+            lblNotes.Location = new Point(130, 263);
+            lblNotes.Name = "lblNotes";
+            lblNotes.Size = new Size(38, 15);
+            lblNotes.TabIndex = 10;
+            lblNotes.Text = "Notes";
             // 
-            // lblSpacer
+            // txtVersion
             // 
-            lblSpacer.Name = "lblSpacer";
-            lblSpacer.Size = new Size(1013, 17);
-            lblSpacer.Spring = true;
+            txtVersion.Location = new Point(186, 222);
+            txtVersion.Name = "txtVersion";
+            txtVersion.Size = new Size(56, 23);
+            txtVersion.TabIndex = 9;
+            txtVersion.TextChanged += txtVersion_TextChanged;
             // 
-            // lblFile
+            // lblVersion
             // 
-            lblFile.Name = "lblFile";
-            lblFile.Size = new Size(86, 17);
-            lblFile.Text = "No File Loaded";
+            lblVersion.AutoSize = true;
+            lblVersion.Location = new Point(123, 225);
+            lblVersion.Name = "lblVersion";
+            lblVersion.Size = new Size(45, 15);
+            lblVersion.TabIndex = 8;
+            lblVersion.Text = "Version";
+            // 
+            // txtPreparedBy
+            // 
+            txtPreparedBy.Location = new Point(186, 178);
+            txtPreparedBy.Name = "txtPreparedBy";
+            txtPreparedBy.Size = new Size(261, 23);
+            txtPreparedBy.TabIndex = 7;
+            txtPreparedBy.TextChanged += txtPreparedBy_TextChanged;
+            // 
+            // lblPreparedBy
+            // 
+            lblPreparedBy.AutoSize = true;
+            lblPreparedBy.Location = new Point(98, 181);
+            lblPreparedBy.Name = "lblPreparedBy";
+            lblPreparedBy.Size = new Size(70, 15);
+            lblPreparedBy.TabIndex = 6;
+            lblPreparedBy.Text = "Prepared By";
+            // 
+            // dtStudyDate
+            // 
+            dtStudyDate.Format = DateTimePickerFormat.Short;
+            dtStudyDate.Location = new Point(186, 139);
+            dtStudyDate.Name = "dtStudyDate";
+            dtStudyDate.Size = new Size(100, 23);
+            dtStudyDate.TabIndex = 5;
+            dtStudyDate.ValueChanged += dtStudyDate_ValueChanged;
+            // 
+            // lblStudyDate
+            // 
+            lblStudyDate.AutoSize = true;
+            lblStudyDate.Location = new Point(104, 145);
+            lblStudyDate.Name = "lblStudyDate";
+            lblStudyDate.Size = new Size(64, 15);
+            lblStudyDate.TabIndex = 4;
+            lblStudyDate.Text = "Study Date";
+            // 
+            // txtPropertyDescription
+            // 
+            txtPropertyDescription.Location = new Point(186, 67);
+            txtPropertyDescription.Multiline = true;
+            txtPropertyDescription.Name = "txtPropertyDescription";
+            txtPropertyDescription.Size = new Size(227, 66);
+            txtPropertyDescription.TabIndex = 3;
+            txtPropertyDescription.TextChanged += txtPropertyDescription_TextChanged;
+            // 
+            // lblPropertyDescription
+            // 
+            lblPropertyDescription.AutoSize = true;
+            lblPropertyDescription.Location = new Point(53, 70);
+            lblPropertyDescription.Name = "lblPropertyDescription";
+            lblPropertyDescription.Size = new Size(115, 15);
+            lblPropertyDescription.TabIndex = 2;
+            lblPropertyDescription.Text = "Property Description";
+            // 
+            // txtAssociationName
+            // 
+            txtAssociationName.Location = new Point(186, 25);
+            txtAssociationName.Name = "txtAssociationName";
+            txtAssociationName.Size = new Size(261, 23);
+            txtAssociationName.TabIndex = 1;
+            txtAssociationName.TextChanged += txtAssociationName_TextChanged;
+            // 
+            // lblAssociationName
+            // 
+            lblAssociationName.AutoSize = true;
+            lblAssociationName.Location = new Point(65, 28);
+            lblAssociationName.Name = "lblAssociationName";
+            lblAssociationName.Size = new Size(103, 15);
+            lblAssociationName.TabIndex = 0;
+            lblAssociationName.Text = "Association Name";
+            lblAssociationName.Click += lblAssociationName_Click;
             // 
             // tabSettings
             // 
+            tabSettings.Controls.Add(cboAllocationMethod);
+            tabSettings.Controls.Add(lblAllocationMethod);
+            tabSettings.Controls.Add(nudInflationRate);
+            tabSettings.Controls.Add(lblInflationRate);
+            tabSettings.Controls.Add(nudInterestRate);
+            tabSettings.Controls.Add(lblInterestRate);
+            tabSettings.Controls.Add(nudBeginningReservePool);
+            tabSettings.Controls.Add(lblBeginReservePool);
+            tabSettings.Controls.Add(nudUnitCount);
+            tabSettings.Controls.Add(lblUnitCount);
+            tabSettings.Controls.Add(lblCurrentYear);
+            tabSettings.Controls.Add(nudCurrentYear);
             tabSettings.Location = new Point(4, 24);
             tabSettings.Name = "tabSettings";
             tabSettings.Padding = new Padding(3);
@@ -298,6 +432,113 @@
             tabSettings.TabIndex = 1;
             tabSettings.Text = "Settings";
             tabSettings.UseVisualStyleBackColor = true;
+            // 
+            // cboAllocationMethod
+            // 
+            cboAllocationMethod.FormattingEnabled = true;
+            cboAllocationMethod.Location = new Point(271, 272);
+            cboAllocationMethod.Name = "cboAllocationMethod";
+            cboAllocationMethod.Size = new Size(185, 23);
+            cboAllocationMethod.TabIndex = 11;
+            cboAllocationMethod.SelectedIndexChanged += cboAllocationMethod_SelectedIndexChanged;
+            // 
+            // lblAllocationMethod
+            // 
+            lblAllocationMethod.AutoSize = true;
+            lblAllocationMethod.Location = new Point(144, 279);
+            lblAllocationMethod.Name = "lblAllocationMethod";
+            lblAllocationMethod.Size = new Size(106, 15);
+            lblAllocationMethod.TabIndex = 10;
+            lblAllocationMethod.Text = "Allocation Method";
+            // 
+            // nudInflationRate
+            // 
+            nudInflationRate.Location = new Point(271, 226);
+            nudInflationRate.Name = "nudInflationRate";
+            nudInflationRate.Size = new Size(79, 23);
+            nudInflationRate.TabIndex = 9;
+            nudInflationRate.ValueChanged += nudInflationRate_ValueChanged;
+            // 
+            // lblInflationRate
+            // 
+            lblInflationRate.AutoSize = true;
+            lblInflationRate.Location = new Point(173, 232);
+            lblInflationRate.Name = "lblInflationRate";
+            lblInflationRate.Size = new Size(77, 15);
+            lblInflationRate.TabIndex = 8;
+            lblInflationRate.Text = "Inflation Rate";
+            // 
+            // nudInterestRate
+            // 
+            nudInterestRate.Location = new Point(271, 180);
+            nudInterestRate.Name = "nudInterestRate";
+            nudInterestRate.Size = new Size(79, 23);
+            nudInterestRate.TabIndex = 7;
+            nudInterestRate.ValueChanged += nudInterestRate_ValueChanged;
+            // 
+            // lblInterestRate
+            // 
+            lblInterestRate.AutoSize = true;
+            lblInterestRate.Location = new Point(178, 185);
+            lblInterestRate.Name = "lblInterestRate";
+            lblInterestRate.Size = new Size(72, 15);
+            lblInterestRate.TabIndex = 6;
+            lblInterestRate.Text = "Interest Rate";
+            // 
+            // nudBeginningReservePool
+            // 
+            nudBeginningReservePool.Location = new Point(271, 134);
+            nudBeginningReservePool.Maximum = new decimal(new int[] { 10000000, 0, 0, 0 });
+            nudBeginningReservePool.Name = "nudBeginningReservePool";
+            nudBeginningReservePool.Size = new Size(79, 23);
+            nudBeginningReservePool.TabIndex = 5;
+            nudBeginningReservePool.ValueChanged += nudBeginningReservePool_ValueChanged;
+            // 
+            // lblBeginReservePool
+            // 
+            lblBeginReservePool.AutoSize = true;
+            lblBeginReservePool.Location = new Point(119, 136);
+            lblBeginReservePool.Name = "lblBeginReservePool";
+            lblBeginReservePool.Size = new Size(131, 15);
+            lblBeginReservePool.TabIndex = 4;
+            lblBeginReservePool.Text = "Beginning Reserve Pool";
+            // 
+            // nudUnitCount
+            // 
+            nudUnitCount.Location = new Point(271, 88);
+            nudUnitCount.Name = "nudUnitCount";
+            nudUnitCount.Size = new Size(79, 23);
+            nudUnitCount.TabIndex = 3;
+            nudUnitCount.ValueChanged += nudUnitCount_ValueChanged;
+            // 
+            // lblUnitCount
+            // 
+            lblUnitCount.AutoSize = true;
+            lblUnitCount.Location = new Point(185, 91);
+            lblUnitCount.Name = "lblUnitCount";
+            lblUnitCount.Size = new Size(65, 15);
+            lblUnitCount.TabIndex = 2;
+            lblUnitCount.Text = "Unit Count";
+            // 
+            // lblCurrentYear
+            // 
+            lblCurrentYear.AutoSize = true;
+            lblCurrentYear.Location = new Point(178, 44);
+            lblCurrentYear.Name = "lblCurrentYear";
+            lblCurrentYear.Size = new Size(72, 15);
+            lblCurrentYear.TabIndex = 1;
+            lblCurrentYear.Text = "Current Year";
+            // 
+            // nudCurrentYear
+            // 
+            nudCurrentYear.Location = new Point(271, 42);
+            nudCurrentYear.Maximum = new decimal(new int[] { 3000, 0, 0, 0 });
+            nudCurrentYear.Minimum = new decimal(new int[] { 2000, 0, 0, 0 });
+            nudCurrentYear.Name = "nudCurrentYear";
+            nudCurrentYear.Size = new Size(79, 23);
+            nudCurrentYear.TabIndex = 0;
+            nudCurrentYear.Value = new decimal(new int[] { 2000, 0, 0, 0 });
+            nudCurrentYear.ValueChanged += nudCurrentYear_ValueChanged;
             // 
             // tabComponents
             // 
@@ -324,8 +565,33 @@
             dgvComponents.TabIndex = 0;
             dgvComponents.CellValueChanged += dgvComponents_CellValueChanged;
             dgvComponents.CurrentCellDirtyStateChanged += dgvComponents_CurrentCellDirtyStateChanged;
-            //dgvComponents.CellValidating += dgvComponents_CellValidating;
-            //dgvComponents.DataError += dgvComponents_DataError;
+            // 
+            // statusStrip
+            // 
+            statusStrip.Items.AddRange(new ToolStripItem[] { lblStatus, lblSpacer, lblFile });
+            statusStrip.Location = new Point(0, 739);
+            statusStrip.Name = "statusStrip";
+            statusStrip.Size = new Size(1184, 22);
+            statusStrip.TabIndex = 0;
+            statusStrip.Text = "statusStrip1";
+            // 
+            // lblStatus
+            // 
+            lblStatus.Name = "lblStatus";
+            lblStatus.Size = new Size(39, 17);
+            lblStatus.Text = "Ready";
+            // 
+            // lblSpacer
+            // 
+            lblSpacer.Name = "lblSpacer";
+            lblSpacer.Size = new Size(1044, 17);
+            lblSpacer.Spring = true;
+            // 
+            // lblFile
+            // 
+            lblFile.Name = "lblFile";
+            lblFile.Size = new Size(86, 17);
+            lblFile.Text = "No File Loaded";
             // 
             // MainForm
             // 
@@ -342,16 +608,25 @@
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Reserve Study Editor";
             WindowState = FormWindowState.Maximized;
-            Load += Form1_Load;
+            FormClosing += MainForm_FormClosing;
             MenuStrip.ResumeLayout(false);
             MenuStrip.PerformLayout();
             toolStrip.ResumeLayout(false);
             toolStrip.PerformLayout();
             tabControl.ResumeLayout(false);
-            statusStrip.ResumeLayout(false);
-            statusStrip.PerformLayout();
+            tabStudy.ResumeLayout(false);
+            tabStudy.PerformLayout();
+            tabSettings.ResumeLayout(false);
+            tabSettings.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)nudInflationRate).EndInit();
+            ((System.ComponentModel.ISupportInitialize)nudInterestRate).EndInit();
+            ((System.ComponentModel.ISupportInitialize)nudBeginningReservePool).EndInit();
+            ((System.ComponentModel.ISupportInitialize)nudUnitCount).EndInit();
+            ((System.ComponentModel.ISupportInitialize)nudCurrentYear).EndInit();
             tabComponents.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dgvComponents).EndInit();
+            statusStrip.ResumeLayout(false);
+            statusStrip.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -392,5 +667,29 @@
         private ToolStripStatusLabel lblSpacer;
         private ToolStripStatusLabel lblFile;
         private DataGridView dgvComponents;
+        private TextBox txtVersion;
+        private Label lblVersion;
+        private TextBox txtPreparedBy;
+        private Label lblPreparedBy;
+        private DateTimePicker dtStudyDate;
+        private Label lblStudyDate;
+        private TextBox txtPropertyDescription;
+        private Label lblPropertyDescription;
+        private TextBox txtAssociationName;
+        private Label lblAssociationName;
+        private TextBox txtNotes;
+        private Label lblNotes;
+        private Label lblCurrentYear;
+        private NumericUpDown nudCurrentYear;
+        private ComboBox cboAllocationMethod;
+        private Label lblAllocationMethod;
+        private NumericUpDown nudInflationRate;
+        private Label lblInflationRate;
+        private NumericUpDown nudInterestRate;
+        private Label lblInterestRate;
+        private NumericUpDown nudBeginningReservePool;
+        private Label lblBeginReservePool;
+        private NumericUpDown nudUnitCount;
+        private Label lblUnitCount;
     }
 }

@@ -40,5 +40,5 @@ public sealed class ReserveStudy
 
     [JsonIgnore]
     public decimal NonSirsReplacementCost =>
-        SirsComponents.Sum(c => c.ReplacementCost);
+        NonSirsComponents.Sum(c => c.ReplacementCost);
 }
