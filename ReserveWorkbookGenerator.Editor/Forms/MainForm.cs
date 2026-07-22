@@ -1,7 +1,9 @@
 using Microsoft.VisualBasic;
+using ReserveWorkbookGenerator.Editor.Forms;
 using ReserveWorkbookGenerator.Editor.Helpers;
 using ReserveWorkbookGenerator.Editor.Services;
 using ReserveWorkbookGenerator.Editor.State;
+using ReserveWorkbookGenerator.Editor.Validation;
 using ReserveWorkbookGenerator.Models;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -14,6 +16,10 @@ namespace ReserveWorkbookGenerator.Editor
         private readonly EditorState _state = new();
         private readonly StudyFileService _studyFileService = new();
         private readonly WorkbookGenerator _workbookGenerator;
+
+        private readonly ToolStripItem[] _studyTools;
+        private readonly ToolStripItem[] _componentTools;
+
         public string DisplayName =>
             string.IsNullOrWhiteSpace(_state.DisplayName)
                 ? "Untitled"
@@ -41,6 +47,25 @@ namespace ReserveWorkbookGenerator.Editor
             cboAllocationMethod.DataSource = methods;
             _workbookGenerator = new WorkbookGenerator();
             InitializeComponentGrid();
+
+            _studyTools =
+                [
+                    btnValidate,
+                    btnGenerate,
+                    sepToolStripMenuItem
+                ];
+
+            _componentTools =
+            [
+                btnAddComponent,
+                btnDuplicateComponent,
+                btnDeleteComponent,
+                btnMoveUp,
+                btnMoveDown,
+                sepToolStripMenuItem1
+            ];
+            UpdateToolbar();
+
         }
         #endregion
 
@@ -278,7 +303,7 @@ namespace ReserveWorkbookGenerator.Editor
             });
 
         }
-        private void RefreshComponentGrid()
+        private void RefreshComponentGrid(ReserveComponent? selectedComponent = null)
         {
             if (_state.Study == null)
             {
@@ -288,6 +313,19 @@ namespace ReserveWorkbookGenerator.Editor
 
             dgvComponents.DataSource = new BindingList<ReserveComponent>(
                 _state.Study.Components);
+
+            if (selectedComponent == null)
+                return;
+
+            foreach (DataGridViewRow row in dgvComponents.Rows)
+            {
+                if (ReferenceEquals(row.DataBoundItem, selectedComponent))
+                {
+                    row.Selected = true;
+                    dgvComponents.CurrentCell = row.Cells[0];
+                    break;
+                }
+            }
         }
         private bool SaveStudy()
         {
@@ -330,11 +368,11 @@ namespace ReserveWorkbookGenerator.Editor
             mnuFileSave.Enabled = canSave;
             btnSave.Enabled = canSave;
         }
-        private void RefreshUi()
+        private void RefreshUi(ReserveComponent? selectedComponent = null)
         {
             UpdateWindowTitle();
             UpdateSaveState();
-
+            RefreshComponentGrid(selectedComponent);
             lblFile.Text = _state.DisplayName;
         }
 
@@ -649,6 +687,23 @@ namespace ReserveWorkbookGenerator.Editor
             {
                 Cursor = Cursors.WaitCursor;
 
+                var validator = new StudyValidator();
+
+                var results = validator.Validate(_state.Study!);
+
+                if (results.Any())
+                {
+                    using (var dialog = new ValidationResultsForm(results))
+                    {
+                        dialog.ShowDialog(this);
+                    }
+
+                    return;
+                }
+
+
+
+
                 string outputFile = _workbookGenerator.Generate(
                     _state.Study!,
                     saveFileDialog.FileName);
@@ -672,6 +727,211 @@ namespace ReserveWorkbookGenerator.Editor
             {
                 Cursor = Cursors.Default;
             }
+        }
+        private void SetVisible(IEnumerable<ToolStripItem> items, bool visible)
+        {
+            foreach (var item in items)
+                item.Visible = visible;
+        }
+        private void UpdateToolbar()
+        {
+            SetVisible(_studyTools, tabControl.SelectedTab == tabStudy);
+            SetVisible(_componentTools, tabControl.SelectedTab == tabComponents);
+        }
+
+        private void tabControl_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            UpdateToolbar();
+        }
+
+        private void tsbDuplicateComponent_Click(object sender, EventArgs e)
+        {
+            DuplicateSelectedComponent();
+        }
+        private void DuplicateSelectedComponent()
+        {
+            if (!_state.HasStudy)
+                return;
+
+            if (dgvComponents.CurrentRow == null)
+                return;
+
+            var selectedComponent = GetSelectedComponent();
+
+            if (selectedComponent == null)
+                return;
+
+            var copy = new ReserveComponent
+            {
+                Id = GetNextComponentId(),
+
+                Type = selectedComponent.Type,
+                Category = selectedComponent.Category,
+                Name = selectedComponent.Name,
+
+                LastReplaced = selectedComponent.LastReplaced,
+                UsefulLife = selectedComponent.UsefulLife,
+                RemainingLife = selectedComponent.RemainingLife,
+
+                ReplacementCost = selectedComponent.ReplacementCost,
+
+                Comments = selectedComponent.Comments
+            };
+
+            int index = _state.Study.Components.IndexOf(selectedComponent);
+
+            _state.Study.Components.Insert(index + 1, copy);
+
+            _state.IsDirty = true;
+
+            RefreshUi(copy);
+
+            lblStatus.Text = "Component duplicated.";
+        }
+
+        private void dgvComponents_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void btnDuplicateComponent_Click(object sender, EventArgs e)
+        {
+            DuplicateSelectedComponent();
+        }
+
+        private void btnAddComponent_Click(object sender, EventArgs e)
+        {
+            AddComponent();
+        }
+        private void AddComponent()
+        {
+            if (!_state.HasStudy)
+                return;
+
+            var component = new ReserveComponent
+            {
+                Id = GetNextComponentId(),
+                Type = ReserveType.NonSirs,
+
+                Category = string.Empty,
+                Name = "New Component",
+
+                LastReplaced = _state.Study.Settings.CurrentYear,
+
+                UsefulLife = 1,
+                RemainingLife = 1,
+
+                ReplacementCost = 0m,
+
+                Comments = string.Empty
+            };
+
+            _state.Study.Components.Add(component);
+
+            _state.IsDirty = true;
+
+            RefreshUi(component);
+
+            lblStatus.Text = "Component added.";
+        }
+        private int GetNextComponentId()
+        {
+            return _state.Study!.Components.Any()
+                ? _state.Study.Components.Max(c => c.Id) + 1
+                : 1;
+        }
+
+        private void btnDeleteComponent_Click(object sender, EventArgs e)
+        {
+            DeleteSelectedComponent();
+        }
+        private void DeleteSelectedComponent()
+        {
+            if (!_state.HasStudy)
+                return;
+
+            if (dgvComponents.CurrentRow == null)
+                return;
+
+            var selectedComponent = GetSelectedComponent();
+
+            if (selectedComponent == null)
+                return;
+
+            var result = MessageBox.Show(
+                $"Delete '{selectedComponent.Name}'?",
+                "Delete Component",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question,
+                MessageBoxDefaultButton.Button2);
+
+            if (result != DialogResult.Yes)
+                return;
+
+            int index = _state.Study!.Components.IndexOf(selectedComponent);
+
+            ReserveComponent? nextSelection = null;
+
+            if (_state.Study.Components.Count > 1)
+            {
+                if (index < _state.Study.Components.Count - 1)
+                    nextSelection = _state.Study.Components[index + 1];
+                else
+                    nextSelection = _state.Study.Components[index - 1];
+            }
+
+            _state.Study.Components.Remove(selectedComponent);
+
+            _state.IsDirty = true;
+
+            RefreshUi(nextSelection);
+
+            lblStatus.Text = "Component deleted.";
+        }
+
+        private void btnMoveUp_Click(object sender, EventArgs e)
+        {
+            MoveSelectedComponent(-1);
+        }
+        private void MoveSelectedComponent(int direction)
+        {
+            if (!_state.HasStudy)
+                return;
+
+            var selectedComponent = GetSelectedComponent();
+
+            if (selectedComponent == null)
+                return;
+
+            var components = _state.Study!.Components;
+
+            int index = components.IndexOf(selectedComponent);
+
+            int newIndex = index + direction;
+
+            if (newIndex < 0 || newIndex >= components.Count)
+                return;
+
+            components.RemoveAt(index);
+
+            components.Insert(newIndex, selectedComponent);
+
+            _state.IsDirty = true;
+
+            RefreshUi(selectedComponent);
+
+            lblStatus.Text = direction < 0
+                ? "Component moved up."
+                : "Component moved down.";
+        }
+
+        private void btnMoveDown_Click(object sender, EventArgs e)
+        {
+            MoveSelectedComponent(1);
+        }
+        private ReserveComponent? GetSelectedComponent()
+        {
+            return dgvComponents.CurrentRow?.DataBoundItem as ReserveComponent;
         }
     }
 }

@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             MenuStrip = new MenuStrip();
             mnuFile = new ToolStripMenuItem();
             mnuFileNew = new ToolStripMenuItem();
@@ -52,6 +51,11 @@
             btnSave = new ToolStripButton();
             btnGenerate = new ToolStripButton();
             btnValidate = new ToolStripButton();
+            btnAddComponent = new ToolStripButton();
+            btnDuplicateComponent = new ToolStripButton();
+            btnDeleteComponent = new ToolStripButton();
+            btnMoveUp = new ToolStripButton();
+            btnMoveDown = new ToolStripButton();
             tabControl = new TabControl();
             tabStudy = new TabPage();
             txtNotes = new TextBox();
@@ -219,7 +223,7 @@
             // 
             // toolStrip
             // 
-            toolStrip.Items.AddRange(new ToolStripItem[] { btnNew, btnOpen, btnSave, btnGenerate, btnValidate });
+            toolStrip.Items.AddRange(new ToolStripItem[] { btnNew, btnOpen, btnSave, btnGenerate, btnValidate, btnAddComponent, btnDuplicateComponent, btnDeleteComponent, btnMoveUp, btnMoveDown });
             toolStrip.Location = new Point(0, 24);
             toolStrip.Name = "toolStrip";
             toolStrip.Size = new Size(1184, 25);
@@ -228,48 +232,83 @@
             // 
             // btnNew
             // 
-            btnNew.Image = (Image)resources.GetObject("btnNew.Image");
             btnNew.ImageTransparentColor = Color.Magenta;
             btnNew.Name = "btnNew";
-            btnNew.Size = new Size(84, 22);
+            btnNew.Size = new Size(68, 22);
             btnNew.Text = "New Study";
             btnNew.Click += btnNew_Click;
             // 
             // btnOpen
             // 
-            btnOpen.Image = (Image)resources.GetObject("btnOpen.Image");
             btnOpen.ImageTransparentColor = Color.Magenta;
             btnOpen.Name = "btnOpen";
-            btnOpen.Size = new Size(56, 22);
+            btnOpen.Size = new Size(40, 22);
             btnOpen.Text = "Open";
             btnOpen.Click += btnOpen_Click;
             // 
             // btnSave
             // 
-            btnSave.Image = (Image)resources.GetObject("btnSave.Image");
             btnSave.ImageTransparentColor = Color.Magenta;
             btnSave.Name = "btnSave";
-            btnSave.Size = new Size(51, 22);
+            btnSave.Size = new Size(35, 22);
             btnSave.Text = "Save";
             btnSave.Click += btnSave_Click;
             // 
             // btnGenerate
             // 
-            btnGenerate.Image = (Image)resources.GetObject("btnGenerate.Image");
             btnGenerate.ImageTransparentColor = Color.Magenta;
             btnGenerate.Name = "btnGenerate";
-            btnGenerate.Size = new Size(74, 22);
+            btnGenerate.Size = new Size(58, 22);
             btnGenerate.Text = "Generate";
             btnGenerate.Click += btnGenerate_Click;
             // 
             // btnValidate
             // 
-            btnValidate.Image = (Image)resources.GetObject("btnValidate.Image");
             btnValidate.ImageTransparentColor = Color.Magenta;
             btnValidate.Name = "btnValidate";
-            btnValidate.Size = new Size(68, 22);
+            btnValidate.Size = new Size(52, 22);
             btnValidate.Text = "Validate";
             btnValidate.Click += btnValidate_Click;
+            // 
+            // btnAddComponent
+            // 
+            btnAddComponent.ImageTransparentColor = Color.Magenta;
+            btnAddComponent.Name = "btnAddComponent";
+            btnAddComponent.Size = new Size(100, 22);
+            btnAddComponent.Text = "Add Component";
+            btnAddComponent.Click += btnAddComponent_Click;
+            // 
+            // btnDuplicateComponent
+            // 
+            btnDuplicateComponent.ImageTransparentColor = Color.Magenta;
+            btnDuplicateComponent.Name = "btnDuplicateComponent";
+            btnDuplicateComponent.Size = new Size(128, 22);
+            btnDuplicateComponent.Text = "Duplicate Component";
+            btnDuplicateComponent.Click += btnDuplicateComponent_Click;
+            // 
+            // btnDeleteComponent
+            // 
+            btnDeleteComponent.ImageTransparentColor = Color.Magenta;
+            btnDeleteComponent.Name = "btnDeleteComponent";
+            btnDeleteComponent.Size = new Size(111, 22);
+            btnDeleteComponent.Text = "Delete Component";
+            btnDeleteComponent.Click += btnDeleteComponent_Click;
+            // 
+            // btnMoveUp
+            // 
+            btnMoveUp.ImageTransparentColor = Color.Magenta;
+            btnMoveUp.Name = "btnMoveUp";
+            btnMoveUp.Size = new Size(59, 22);
+            btnMoveUp.Text = "Move Up";
+            btnMoveUp.Click += btnMoveUp_Click;
+            // 
+            // btnMoveDown
+            // 
+            btnMoveDown.ImageTransparentColor = Color.Magenta;
+            btnMoveDown.Name = "btnMoveDown";
+            btnMoveDown.Size = new Size(75, 22);
+            btnMoveDown.Text = "Move Down";
+            btnMoveDown.Click += btnMoveDown_Click;
             // 
             // tabControl
             // 
@@ -282,6 +321,7 @@
             tabControl.SelectedIndex = 0;
             tabControl.Size = new Size(1184, 712);
             tabControl.TabIndex = 2;
+            tabControl.SelectedIndexChanged += tabControl_SelectedIndexChanged;
             // 
             // tabStudy
             // 
@@ -563,6 +603,7 @@
             dgvComponents.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvComponents.Size = new Size(1176, 684);
             dgvComponents.TabIndex = 0;
+            dgvComponents.CellContentClick += dgvComponents_CellContentClick;
             dgvComponents.CellValueChanged += dgvComponents_CellValueChanged;
             dgvComponents.CurrentCellDirtyStateChanged += dgvComponents_CurrentCellDirtyStateChanged;
             // 
@@ -607,7 +648,6 @@
             Name = "MainForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Reserve Study Editor";
-            WindowState = FormWindowState.Maximized;
             FormClosing += MainForm_FormClosing;
             MenuStrip.ResumeLayout(false);
             MenuStrip.PerformLayout();
@@ -691,5 +731,10 @@
         private Label lblBeginReservePool;
         private NumericUpDown nudUnitCount;
         private Label lblUnitCount;
+        private ToolStripButton btnAddComponent;
+        private ToolStripButton btnDuplicateComponent;
+        private ToolStripButton btnDeleteComponent;
+        private ToolStripButton btnMoveUp;
+        private ToolStripButton btnMoveDown;
     }
 }
