@@ -82,7 +82,7 @@
             nudUnitCount = new NumericUpDown();
             lblUnitCount = new Label();
             lblCurrentYear = new Label();
-            nudCurrentYear = new NumericUpDown();
+            nudStudyYear = new NumericUpDown();
             tabComponents = new TabPage();
             dgvComponents = new DataGridView();
             statusStrip = new StatusStrip();
@@ -98,7 +98,7 @@
             ((System.ComponentModel.ISupportInitialize)nudInterestRate).BeginInit();
             ((System.ComponentModel.ISupportInitialize)nudBeginningReservePool).BeginInit();
             ((System.ComponentModel.ISupportInitialize)nudUnitCount).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)nudCurrentYear).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)nudStudyYear).BeginInit();
             tabComponents.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvComponents).BeginInit();
             statusStrip.SuspendLayout();
@@ -464,7 +464,7 @@
             tabSettings.Controls.Add(nudUnitCount);
             tabSettings.Controls.Add(lblUnitCount);
             tabSettings.Controls.Add(lblCurrentYear);
-            tabSettings.Controls.Add(nudCurrentYear);
+            tabSettings.Controls.Add(nudStudyYear);
             tabSettings.Location = new Point(4, 24);
             tabSettings.Name = "tabSettings";
             tabSettings.Padding = new Padding(3);
@@ -565,20 +565,20 @@
             lblCurrentYear.AutoSize = true;
             lblCurrentYear.Location = new Point(178, 44);
             lblCurrentYear.Name = "lblCurrentYear";
-            lblCurrentYear.Size = new Size(72, 15);
+            lblCurrentYear.Size = new Size(62, 15);
             lblCurrentYear.TabIndex = 1;
-            lblCurrentYear.Text = "Current Year";
+            lblCurrentYear.Text = "Study Year";
             // 
-            // nudCurrentYear
+            // nudStudyYear
             // 
-            nudCurrentYear.Location = new Point(271, 42);
-            nudCurrentYear.Maximum = new decimal(new int[] { 3000, 0, 0, 0 });
-            nudCurrentYear.Minimum = new decimal(new int[] { 2000, 0, 0, 0 });
-            nudCurrentYear.Name = "nudCurrentYear";
-            nudCurrentYear.Size = new Size(79, 23);
-            nudCurrentYear.TabIndex = 0;
-            nudCurrentYear.Value = new decimal(new int[] { 2000, 0, 0, 0 });
-            nudCurrentYear.ValueChanged += nudCurrentYear_ValueChanged;
+            nudStudyYear.Location = new Point(271, 42);
+            nudStudyYear.Maximum = new decimal(new int[] { 3000, 0, 0, 0 });
+            nudStudyYear.Minimum = new decimal(new int[] { 2000, 0, 0, 0 });
+            nudStudyYear.Name = "nudStudyYear";
+            nudStudyYear.Size = new Size(79, 23);
+            nudStudyYear.TabIndex = 0;
+            nudStudyYear.Value = new decimal(new int[] { 2000, 0, 0, 0 });
+            nudStudyYear.ValueChanged += nudCurrentYear_ValueChanged;
             // 
             // tabComponents
             // 
@@ -662,7 +662,7 @@
             ((System.ComponentModel.ISupportInitialize)nudInterestRate).EndInit();
             ((System.ComponentModel.ISupportInitialize)nudBeginningReservePool).EndInit();
             ((System.ComponentModel.ISupportInitialize)nudUnitCount).EndInit();
-            ((System.ComponentModel.ISupportInitialize)nudCurrentYear).EndInit();
+            ((System.ComponentModel.ISupportInitialize)nudStudyYear).EndInit();
             tabComponents.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dgvComponents).EndInit();
             statusStrip.ResumeLayout(false);
@@ -720,7 +720,7 @@
         private TextBox txtNotes;
         private Label lblNotes;
         private Label lblCurrentYear;
-        private NumericUpDown nudCurrentYear;
+        private NumericUpDown nudStudyYear;
         private ComboBox cboAllocationMethod;
         private Label lblAllocationMethod;
         private NumericUpDown nudInflationRate;

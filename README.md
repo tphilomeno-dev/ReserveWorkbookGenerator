@@ -211,3 +211,10 @@ The software is the implementation.
 The reserve funding methodology is the product.
 
 Version 1.0 Milestone: Domain model finalized, production GrandCove.json completed, workbook generation verified, and all unit tests passing.
+
+# Staebler Notes
+We will never match the Staebler study because of errors in their data
+    Elevators - They had Last Replaced in 2017 but it should be 2006
+        they had remaining life of 12 years but it should be 1 year
+    Power Pedestals - They had useful life of 60 should be 20
+        so remainin life was 41 should be 1 year

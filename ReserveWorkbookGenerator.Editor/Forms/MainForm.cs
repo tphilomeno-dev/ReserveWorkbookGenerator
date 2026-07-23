@@ -495,7 +495,7 @@ namespace ReserveWorkbookGenerator.Editor
             {
                 if (!_state.HasStudy)
                 {
-                    nudCurrentYear.Value = DateTime.Now.Year;
+                    nudStudyYear.Value = DateTime.Now.Year;
                     nudUnitCount.Value = 1;
                     nudBeginningReservePool.Value = 0;
                     nudInterestRate.Value = 0;
@@ -506,7 +506,7 @@ namespace ReserveWorkbookGenerator.Editor
 
                 var settings = _state.Study!.Settings;
 
-                nudCurrentYear.Value = settings.CurrentYear;
+                nudStudyYear.Value = settings.StudyYear;
                 nudUnitCount.Value = settings.UnitCount;
                 nudBeginningReservePool.Value = settings.BeginningReservePool;
                 nudInterestRate.Value = settings.InterestRate;
@@ -524,7 +524,7 @@ namespace ReserveWorkbookGenerator.Editor
             if (!_state.HasStudy || _loadingStudy)
                 return;
 
-            _state.Study!.Settings.CurrentYear = (int)nudCurrentYear.Value;
+            _state.Study!.Settings.StudyYear = (int)nudStudyYear.Value;
 
             MarkStudyDirty();
         }
@@ -826,7 +826,7 @@ namespace ReserveWorkbookGenerator.Editor
                 Category = string.Empty,
                 Name = "New Component",
 
-                LastReplaced = _state.Study.Settings.CurrentYear,
+                LastReplaced = _state.Study.Settings.StudyYear,
 
                 UsefulLife = 1,
                 RemainingLife = 1,

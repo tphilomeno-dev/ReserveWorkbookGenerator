@@ -6,7 +6,7 @@ namespace ReserveWorkbookGenerator.Models
 {
     public sealed class ReserveSettings
     {
-        public int CurrentYear { get; set; }
+        public int StudyYear { get; set; }
 
         public int UnitCount { get; set; }
 

@@ -148,7 +148,7 @@ public class ProjectionEngine
 
         projection.Years.Clear();
 
-        var currentYear = DateTime.Now.Year;
+        var currentYear = projection.ReserveSettings.StudyYear;
 
         for (int i = 0; i < projection.Settings.NumberOfYears; i++)
         {

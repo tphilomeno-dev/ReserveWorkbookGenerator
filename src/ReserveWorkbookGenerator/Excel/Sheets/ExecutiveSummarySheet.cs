@@ -89,7 +89,7 @@ namespace ReserveWorkbookGenerator.Excel.Sheets
             {
                 ReportDate = DateTime.Now,
 
-                StudyYear = DateTime.Today.Year,
+                StudyYear = settings.StudyYear,
 
                 WorkbookVersion = "1.3.0",
 
@@ -219,11 +219,11 @@ namespace ReserveWorkbookGenerator.Excel.Sheets
             //
             foreach (var row in new[]
             {
-        7, 8, 9, 10, 11,
-        15, 16, 17, 18, 19,
-        23, 24, 25,
-        29
-    })
+                7, 8, 9, 10, 11,
+                15, 16, 17, 18, 19,
+                23, 24, 25,
+                29
+            })
             {
                 worksheet.Cell($"A{row}").Style.Font.Bold = true;
             }

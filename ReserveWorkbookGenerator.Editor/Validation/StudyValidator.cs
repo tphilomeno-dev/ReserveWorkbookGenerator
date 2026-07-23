@@ -19,14 +19,14 @@ public sealed class StudyValidator
             });
         }
 
-        // Current Year
+        // Study Year
 
-        if (study.Settings.CurrentYear < 2000)
+        if (study.Settings.StudyYear < 2000)
         {
             results.Add(new ValidationResult
             {
                 Severity = ValidationSeverity.Error,
-                Message = "Current Year must be 2000 or greater."
+                Message = "Study Year must be 2000 or greater."
             });
         }
 
